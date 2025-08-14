@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<script>
+ function getCookie(name) {
+	  const value = `; ${document.cookie}`;
+	  const parts = value.split(`; ${name}=`);
+	  if (parts.length === 2) {
+		  return parts.pop().split(';').shift();
+	  }
+	  return null;
+  }
+const sessionId = getCookie('session_id');
+		  if (!sessionId) location.href = '/index.html';
+
+	</script>
+
+	<title>Zeropad | Staking</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+
+		<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+		<script src="https://unpkg.com/@popperjs/core@2"></script>
+		<script src="https://unpkg.com/tippy.js@6"></script>
+    <link rel="icon" href="../img/favicon.png">
+
+	<style>
+		.loading body {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.loaded body {
+			transition: opacity 0.1s ease 0s;
+			opacity: 1;
+			visibility: visible;
+		}
+
+		* {
+			padding: 0px;
+			margin: 0px;
+			border: 0px;
+		}
+
+		*,
+		*:before,
+		*:after {
+			box-sizing: border-box;
+		}
+
+		.preloader {
+			pointer-events: none;
+			z-index: -1;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: grid;
+			grid-template-rows: 5rem 1fr 5rem;
+			grid-template-columns: 1fr;
+			justify-content: center;
+			align-items: center;
+			background: #09033d;
+		}
+
+		.preloader__image {
+			text-align: center;
+			grid-row: 2 / 3;
+		}
+
+		.preloader__image img {
+			max-width: 100%;
+		}
+
+		.preloader__body {
+			grid-row: 3 / 4;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		}
+
+		.preloader__text {
+			font-size: 1rem;
+			color: #fff;
+			opacity: 0.5;
+			margin-bottom: 0.3125rem;
+		}
+
+		.preloader__line {
+			width: 15.5625rem;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 1.0625rem;
+			height: 0.625rem;
+			position: relative;
+		}
+
+		.preloader__line span {
+			display: inline-block;
+			transition: width 0.2s ease;
+			height: 0.625rem;
+			background-color: #c5f604;
+			border-radius: 1.0625rem;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+		}
+	</style>
+
+<style>
+	.tippy-actions {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  gap: 4px;
+  width: 159px;
+  height: 86px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+}
+.tippy-actions .btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 14px;
+  width: 149px;
+  height: 36px;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  flex: none;
+  align-self: stretch;
+  font-family: 'Onest', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  transition: all 0.2s ease;
+}
+.btn-verify { 
+  gap: 2px;
+  background: linear-gradient(0deg, rgba(197, 246, 4, 0.5), rgba(197, 246, 4, 0.5)), rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  color: #FFFFFF;
+  order: 0;
+}
+.btn-decline { 
+  gap: 7px;
+  background: linear-gradient(0deg, rgba(255, 63, 63, 0.4), rgba(255, 63, 63, 0.4)), rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  color: #FF3F3F;
+  order: 1;
+}
+.btn-verify:hover { 
+  background: linear-gradient(0deg, rgba(197, 246, 4, 0.7), rgba(197, 246, 4, 0.7)), rgba(0, 0, 0, 0.7);
+}
+.btn-decline:hover { 
+  background: linear-gradient(0deg, rgba(255, 63, 63, 0.6), rgba(255, 63, 63, 0.6)), rgba(0, 0, 0, 0.7);
+}
+
+.tippy-box[data-theme~='panel'] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.tippy-box[data-theme~='panel'] .tippy-content {
+  padding: 0;
+  background: transparent;
+}
+</style>
+	<link rel="stylesheet" href="../css/style.min.css?_v=20250709161633">
+	
+	<script src="../js/scripts.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-QQC5J5R6ZR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QQC5J5R6ZR');
+</script>
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header" id="header">
+			<div class="header__container">
+				<a href="/" class="header__logo">
+					<img src="../img/logo.svg" alt="logo Zeropad">
+				</a>
+				<nav class="header__menu menu">
+					<ul class="menu__list">
+						<li class="menu__item"><a href="/home" class="menu__link">Home</a></li>
+						<li class="menu__item"><a href="/launchpad" class="menu__link">Launchpad</a></li>
+						<li class="menu__item"><a href="/referrals" class="menu__link">Referrals</a></li>
+						<li class="menu__item"><a href="/staking" class="menu__link menu__link_current">Staking</a></li>
+					</ul>
+				</nav>
+				<div class="header__box">
+					<div class="header__value">
+						<div class="xpBlock">
+						<div class="relative">
+							<div class="flex items-center aspect-square justify-center rounded-full border border-epic/50 w-9 p-0.5">
+								<div class="flex items-center aspect-square w-full justify-center gap-0.5 rounded-full border border-epic bg-epic-transparent-1">
+									<svg class="overflow-visible fill-current h-full w-[75%]" fill="currentColor" height="12" version="1.1" viewBox="0 0 51 20" xmlns="http://www.w3.org/2000/svg">
+										<defs>
+											<linearGradient id="theme" x2="0%" y2="100%">
+												<stop offset="0%" stop-color="#6c6c6c"></stop>
+												<stop offset="100%" stop-color="#000000"></stop>
+											</linearGradient>
+										</defs>
+										<path d="M0,20 L12.4794188,9.66197488 L4.97032525,0 L12.3721384,0 L16.3412804,5.54933974 C16.6988738,6.05636591 16.877659,6.39439103 17.0206918,6.81692819 L17.1279491,6.81692819 C17.4140146,6.42256939 17.771585,6.08454427 18.3794685,5.54933974 L24.7085474,0 L26.3651767,0 L28.4274453,3.27637807 L20.5964418,9.85915428 L25.8174945,16.6202092 L25.0593955,20 L20.9539661,20 L16.7703787,14.2253485 C16.3413034,13.605632 16.0194624,13.1830948 15.9122051,12.7323793 L15.8406772,12.7323793 C15.4473544,13.1830948 14.9467052,13.6619657 14.3388217,14.1971702 L7.75942962,20 L0,20 Z" class=""></path>
+										<path d="M26.1220694,20 L29.5453708,3.47130136 L27.2830451,0 L30.2643332,0 L41.6307531,0 C46.0382249,0 50.9095806,1.21125477 50.9095806,5.97185388 C50.9095806,9.38028344 48.4241763,13.1267611 40.4377774,13.1267611 L33.6112032,13.1267611 L32.1864007,20 L26.1220694,20 Z M44.4474372,6.22538998 C44.4474372,4.02814612 42.5587509,3.60560897 40.5703814,3.60560897 L35.5995727,3.60560897 L34.340295,9.57748586 L39.3774057,9.57748586 C43.4202166,9.57748586 44.4474372,7.77466987 44.4474372,6.22538998 Z" class=""></path>
+									</svg>
+								</div>
+								
+							</div>
+						</div>
+						
+						<span style="margin-left: 0px;" id="totalPoints"></span>
+						<span style="font-weight: bold;margin-left: 5px;" class="relative__second-icon">XP</span>
+					</div>
+					</div>
+					<div class="header__account" id="accountButton" style="cursor: pointer;" >
+						
+							<svg id="verified_icon"  width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M12 13.5557C14.3722 13.5557 16.4711 14.0084 17.9395 14.6973C19.4872 15.4234 20 16.2289 20 16.7783C19.9998 17.4746 19.6205 18.2354 18.3896 18.877C17.1255 19.5358 15.0584 20 12 20C8.94161 20 6.87454 19.5358 5.61035 18.877C4.37952 18.2354 4.00016 17.4746 4 16.7783C4 16.2289 4.51284 15.4234 6.06055 14.6973C7.52885 14.0084 9.62782 13.5557 12 13.5557ZM12 4C13.484 4 14.8184 5.4463 14.8184 7.00977C14.8183 8.52535 13.5293 9.875 12 9.875C10.4707 9.875 9.1817 8.52535 9.18164 7.00977C9.18164 5.4463 10.516 4 12 4Z" stroke="#C5F604" stroke-width="2" />
+							</svg>
+							<svg id="not_verified_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M12 12.9L12 8.41447M12 16.2248V16.2642M17.6699 20H6.33007C4.7811 20 3.47392 18.9763 3.06265 17.5757C2.88709 16.9778 3.10281 16.3551 3.43276 15.8249L9.10269 5.60102C10.4311 3.46632 13.5689 3.46633 14.8973 5.60103L20.5672 15.8249C20.8972 16.3551 21.1129 16.9778 20.9373 17.5757C20.5261 18.9763 19.2189 20 17.6699 20Z" stroke="#FF8282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+								
+							<span class="account-text">Account</span>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<style>
+        
+
+			.header__account {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+		   
+				cursor: pointer;
+				user-select: none;
+				transition: all 0.3s ease;
+			}
+	
+			.header__account svg {
+				margin-right: 8px;
+			}
+	
+			
+	
+			#xconnect .popup__content {
+             background: 
+               radial-gradient(84.56% 84.56% at 50% 100%, rgba(35, 12, 242, 0.39) 0%, rgba(35, 12, 242, 0) 100%),
+               radial-gradient(100% 100% at 0% 0%, rgba(197, 246, 4, 0.11) 0%, rgba(197, 246, 4, 0) 100%) ,
+               radial-gradient(61.41% 61.41% at 100% 0%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%) ,
+               linear-gradient(0deg, #111C33, #111C33);
+			   border: 1px solid rgba(255, 255, 255, 0.1);
+          }
+			
+	
+		   
+	
+		</style>
+
+<style>		
+.exchange__rowd {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.exchange__boxd {
+    display: flex;
+    align-items: left;
+    gap: 8px;
+	margin-top: 5px;
+}
+</style>
+
+		<main id="main">
+			<section class="exchange">
+				<div class="exchange__container">
+					<div class="exchange__top">
+						<div class="exchange__column">
+							<div class="exchange__row">
+								<div class="exchange__title">Deposit funds</div>
+								<div class="exchange__update">
+									<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M5.07787 15.9861C6.46782 18.3856 9.06573 20 12.0412 20C15.4149 20 18.3031 17.9247 19.4957 14.9826M7.5194 14.9826L3.5 14.9826L3.5 18.9965M18.9221 7.95833C17.5322 5.55882 14.9343 3.94445 11.9588 3.94445C8.58513 3.94445 5.69686 6.0198 4.50433 8.96181M16.4806 8.96181L20.5 8.96181L20.5 4.94792" stroke="#248DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+									</svg>
+								</div>
+							</div>
+							<div class="exchange__items">
+								<div class="exchange__item">
+									<div class="exchange__label">Total deposit</div>
+									<div class="exchange__rowd">
+										<div class="exchange__boxd" >
+											<img src="../img/icon1.svg" alt="Ethereum" width="25" height="24">
+											<div class="exchange__value">0.10 ETH</div>
+										</div>
+										<div class="exchange__boxd">
+											<img src="../img/rsz_polygon.webp" style="border-radius: 50%;" alt="Polygon" width="25" height="24">
+											<div class="exchange__value">0.10 POL</div>
+										</div>
+										<div class="exchange__boxd">
+											<img src="../img/rsz_avalanche.webp" style="border-radius: 50%;" alt="Avalanche" width="25" height="24">
+											<div class="exchange__value">0.10 AVAX</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="exchange__item">
+									<div class="exchange__label">Total farmed from deposits</div>
+									<div class="exchange__value" id="totalFarmFromDeposit">0 XP</div>
+								</div>
+							</div>
+							<button onclick="openDepositModal()" type="button" class="exchange__button">Make a deposit</button>
+						</div>
+						<div class="exchange__column">
+							<div class="exchange__row">
+								<div class="exchange__title">Withdrawal</div>
+								<div class="exchange__update">
+									<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M5.07787 15.9861C6.46782 18.3856 9.06573 20 12.0412 20C15.4149 20 18.3031 17.9247 19.4957 14.9826M7.5194 14.9826L3.5 14.9826L3.5 18.9965M18.9221 7.95833C17.5322 5.55882 14.9343 3.94445 11.9588 3.94445C8.58513 3.94445 5.69686 6.0198 4.50433 8.96181M16.4806 8.96181L20.5 8.96181L20.5 4.94792" stroke="#248DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+									</svg>
+								</div>
+							</div>
+							<div class="exchange__items">
+								<div class="exchange__item">
+									<div class="exchange__label">Pending Withdrawal</div>
+									<div class="exchange__rowd">
+										<div class="exchange__boxd" >
+											<img src="../img/icon1.svg" alt="Ethereum" width="25" height="24">
+											<div class="exchange__value">0.00 ETH</div>
+										</div>
+										<div class="exchange__boxd">
+											<img src="../img/rsz_polygon.webp" style="border-radius: 50%;" alt="Polygon" width="25" height="24">
+											<div class="exchange__value">0.00 POL</div>
+										</div>
+										<div class="exchange__boxd">
+											<img src="../img/rsz_avalanche.webp" style="border-radius: 50%;" alt="Avalanche" width="25" height="24">
+											<div class="exchange__value">0.00 AVAX</div>
+										</div>
+									</div>
+								</div>
+								<div class="exchange__item">
+									<div class="exchange__label">Average Withdrawal</div>
+									<div class="exchange__value" id="averageWithdrawal"></div>
+								</div>
+							</div>
+							<button onclick="openWithdrawalModal()" type="button" class="exchange__button">Withdrawal</button>
+						</div>
+					</div>
+					<div class="exchange__block">
+						<h1 class="exchange__caption">Transaction history</h1>
+						<div class="exchange__table table-exchange">
+							<div class="table-exchange__inner">
+								<div class="table-exchange__top">
+									<div class="table-exchange__subject">Transaction</div>
+									<div class="table-exchange__subject">Network</div>
+									<div class="table-exchange__subject">Amount</div>
+									<div class="table-exchange__subject">XP</div>
+									<div class="table-exchange__subject">Status</div>
+									<div class="table-exchange__subject">Date</div>
+								</div>
+								<div style="width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;padding-top: 20px;padding-bottom: 20px;border-top: 1px solid rgba(255,255,255,.05);">
+									<p style="text-align: center;width: 100%;opacity: 0.5;">No transaction history</p>
+								</div>
+								
+								
+							</div>
+						</div>
+					</div>
+					<div class="exchange__block">
+						<h2 class="exchange__caption">Live deposits</h2>
+						<div class="exchange__table table-exchange">
+							<div class="table-exchange__inner">
+								<div class="table-exchange__top">
+									<div class="table-exchange__subject">Transaction</div>
+									<div class="table-exchange__subject">Network</div>
+									<div class="table-exchange__subject">Amount</div>
+									<div class="table-exchange__subject">XP</div>
+									<div class="table-exchange__subject">Status</div>
+									<div class="table-exchange__subject">Date</div>
+								</div>
+								<div class="table-exchange__row">
+									<div class="table-exchange__item">
+										<div class="table-exchange__arrow">
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M16.375 12.8333L12 17M12 17L7.625 12.8333M12 17L12 7" stroke="#0BDF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+											</svg>
+										</div>
+										<div class="table-exchange__text">Deposit</div>
+									</div>
+									<div class="table-exchange__item">
+										<div class="table-exchange__icon">
+											<img src="../img/icon1.svg" alt="Ethereum" width="25" height="24">
+											
+										</div>
+										<div class="table-exchange__text">Ethereum</div>
+									</div>
+									<div class="table-exchange__text">1.50 ETH</div>
+									<div class="table-exchange__points">+150 XP</div>
+									<div class="table-exchange__item">
+										<div class="table-exchange__status">Confirmed</div>
+									</div>
+									<div class="table-exchange__text">Dec 16, 2024</div>
+								</div>
+								<div class="table-exchange__row">
+									<div class="table-exchange__item">
+										<div class="table-exchange__arrow">
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M16.375 12.8333L12 17M12 17L7.625 12.8333M12 17L12 7" stroke="#0BDF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+											</svg>
+										</div>
+										<div class="table-exchange__text">Deposit</div>
+									</div>
+									<div class="table-exchange__item">
+										<div class="table-exchange__icon">
+											<img src="../img/icon1.svg" alt="Ethereum" width="25" height="24">
+										</div>
+										<div class="table-exchange__text">Ethereum</div>
+									</div>
+									<div class="table-exchange__text">1.00 ETH</div>
+									<div class="table-exchange__points">+100 XP</div>
+									<div class="table-exchange__item">
+										<div class="table-exchange__status">Confirmed</div>
+									</div>
+									<div class="table-exchange__text">Dec 15, 2024</div>
+								</div>
+								<div class="table-exchange__row">
+									<div class="table-exchange__item">
+										<div class="table-exchange__arrow">
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M16.375 12.8333L12 17M12 17L7.625 12.8333M12 17L12 7" stroke="#0BDF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+											</svg>
+										</div>
+										<div class="table-exchange__text">Deposit</div>
+									</div>
+									<div class="table-exchange__item">
+										<div class="table-exchange__icon">
+											<img src="../img/icon1.svg" alt="Ethereum" width="25" height="24">
+										</div>
+										<div class="table-exchange__text">Ethereum</div>
+									</div>
+									<div class="table-exchange__text">1.50 ETH</div>
+									<div class="table-exchange__points">+150 XP</div>
+									<div class="table-exchange__item">
+										<div class="table-exchange__status processing-status">Processing</div>
+									</div>
+									<div class="table-exchange__text">Dec 16, 2024</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="exchange__block">
+						<h2 class="exchange__caption">Platform Statistics</h2>
+						<div class="exchange__widget widget-exchange">
+							<div class="widget-exchange__grid">
+								<div class="widget-exchange__col">
+									<div class="widget-exchange__value widget-exchange__value_green">$12.4M</div>
+									<div class="widget-exchange__text">Total Value Locked</div>
+									<div class="widget-exchange__label widget-exchange__label_up">
+										+15.2%
+									</div>
+								</div>
+								<div class="widget-exchange__col">
+									<div class="widget-exchange__value widget-exchange__value_blue">8,394</div>
+									<div class="widget-exchange__text">Active Stakers</div>
+									<div class="widget-exchange__label widget-exchange__label_up">
+										+15.2%
+									</div>
+								</div>
+								<div class="widget-exchange__col">
+									<div class="widget-exchange__value widget-exchange__value_yellow">2.4M</div>
+									<div class="widget-exchange__text">XP Distributed</div>
+									<div class="widget-exchange__label widget-exchange__label_yellow">Last 24h</div>
+								</div>
+								<div class="widget-exchange__col">
+									<div class="widget-exchange__value widget-exchange__value_purple">9</div>
+									<div class="widget-exchange__text">Supported Networks</div>
+									<div class="widget-exchange__label widget-exchange__label_purple">Multi-chain</div>
+								</div>
+							</div>
+							<div class="widget-exchange__block">
+								<div class="widget-exchange__column">
+									<div class="widget-exchange__caption">Top Networks by TVL</div>
+									<div class="widget-exchange__list">
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__box">
+												<div class="widget-exchange__icon">
+													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M20 13.1251L20 6.00003C20 4.34317 18.6568 3.00002 17 3.00003L9.875 3.00012M14 21.0001L7.25 21.0001C6.00736 21.0001 5 19.9928 5 18.7501L5 9.00012C5 7.75747 6.00736 6.75011 7.25 6.75011L14 6.75011C15.2426 6.75011 16.25 7.75747 16.25 9.00011L16.25 18.7501C16.25 19.9928 15.2426 21.0001 14 21.0001Z" stroke="#248DFF" stroke-width="2" stroke-linecap="round" />
+													</svg>
+												</div>
+												<div class="widget-exchange__subject">Ethereum</div>
+											</div>
+											<div class="widget-exchange__item widget-exchange__item_green">$7.2M</div>
+										</div>
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__box">
+												<div class="widget-exchange__icon">
+													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M20 13.1251L20 6.00003C20 4.34317 18.6568 3.00002 17 3.00003L9.875 3.00012M14 21.0001L7.25 21.0001C6.00736 21.0001 5 19.9928 5 18.7501L5 9.00012C5 7.75747 6.00736 6.75011 7.25 6.75011L14 6.75011C15.2426 6.75011 16.25 7.75747 16.25 9.00011L16.25 18.7501C16.25 19.9928 15.2426 21.0001 14 21.0001Z" stroke="#248DFF" stroke-width="2" stroke-linecap="round" />
+													</svg>
+												</div>
+												<div class="widget-exchange__subject">BSC</div>
+											</div>
+											<div class="widget-exchange__item widget-exchange__item_green">$2.8M</div>
+										</div>
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__box">
+												<div class="widget-exchange__icon">
+													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M20 13.1251L20 6.00003C20 4.34317 18.6568 3.00002 17 3.00003L9.875 3.00012M14 21.0001L7.25 21.0001C6.00736 21.0001 5 19.9928 5 18.7501L5 9.00012C5 7.75747 6.00736 6.75011 7.25 6.75011L14 6.75011C15.2426 6.75011 16.25 7.75747 16.25 9.00011L16.25 18.7501C16.25 19.9928 15.2426 21.0001 14 21.0001Z" stroke="#248DFF" stroke-width="2" stroke-linecap="round" />
+													</svg>
+												</div>
+												<div class="widget-exchange__subject">Polygon</div>
+											</div>
+											<div class="widget-exchange__item widget-exchange__item_green">$1.4M</div>
+										</div>
+									</div>
+								</div>
+								<div class="widget-exchange__column">
+									<div class="widget-exchange__caption">24h Activity</div>
+									<div class="widget-exchange__list">
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__subject">New Deposits</div>
+											<div class="widget-exchange__item widget-exchange__item_green">247</div>
+										</div>
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__subject">Total Volume</div>
+											<div class="widget-exchange__item widget-exchange__item_blue">$394K</div>
+										</div>
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__subject">XP Earned</div>
+											<div class="widget-exchange__item widget-exchange__item_yellow">47,230</div>
+										</div>
+									</div>
+								</div>
+								<div class="widget-exchange__column">
+									<div class="widget-exchange__caption">Platform Status</div>
+									<div class="widget-exchange__list">
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__subject">System Status</div>
+											<div class="widget-exchange__item widget-exchange__item_green">Operational
+											</div>
+										</div>
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__subject">Uptime</div>
+											<div class="widget-exchange__item widget-exchange__item_green">99.9%</div>
+										</div>
+										<div class="widget-exchange__row">
+											<div class="widget-exchange__subject">Last Update</div>
+											<div class="widget-exchange__item">24 hours ago</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="footer" id="footer">
+			<div class="footer__container">
+				<div class="footer__logo">
+					<img src="../img/logo.svg" alt="logo Zeropad">
+				</div>
+				<div class="footer__social">
+					<a href="https://x.com/ZeroPad_fun" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M18.3263 2.53516H21.6998L14.3297 10.9586L23 22.4211H16.2112L10.894 15.4692L4.80995 22.4211H1.43443L9.31743 13.4113L1 2.53516H7.96111L12.7674 8.88949L18.3263 2.53516ZM17.1423 20.4019H19.0116L6.94539 4.44829H4.93946L17.1423 20.4019Z" fill="white" />
+						</svg>
+					</a>
+					<a href="https://discord.gg/MhNGYyPD" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M20.317 4.78594C18.7873 4.08406 17.147 3.56695 15.4319 3.27077C15.4007 3.26506 15.3695 3.27934 15.3534 3.30791C15.1424 3.68313 14.9087 4.17263 14.7451 4.55737C12.9004 4.2812 11.0652 4.2812 9.25832 4.55737C9.09465 4.16407 8.85248 3.68313 8.64057 3.30791C8.62448 3.2803 8.59328 3.26601 8.56205 3.27077C6.84791 3.566 5.20756 4.08312 3.67693 4.78594C3.66368 4.79166 3.65233 4.80119 3.64479 4.81356C0.533392 9.46192 -0.31895 13.996 0.0991801 18.4739C0.101072 18.4958 0.11337 18.5168 0.130398 18.5301C2.18321 20.0376 4.17171 20.9529 6.12328 21.5595C6.15451 21.569 6.18761 21.5576 6.20748 21.5319C6.66913 20.9014 7.08064 20.2367 7.43348 19.5377C7.4543 19.4967 7.43442 19.4482 7.39186 19.432C6.73913 19.1844 6.1176 18.8825 5.51973 18.5396C5.47244 18.512 5.46865 18.4444 5.51216 18.412C5.63797 18.3177 5.76382 18.2196 5.88396 18.1206C5.90569 18.1025 5.93598 18.0987 5.96153 18.1101C9.88928 19.9034 14.1415 19.9034 18.023 18.1101C18.0485 18.0977 18.0788 18.1016 18.1015 18.1196C18.2216 18.2187 18.3475 18.3177 18.4742 18.412C18.5177 18.4444 18.5149 18.512 18.4676 18.5396C17.8697 18.8891 17.2482 19.1844 16.5945 19.431C16.552 19.4472 16.533 19.4967 16.5538 19.5377C16.9143 20.2357 17.3258 20.9005 17.7789 21.5309C17.7978 21.5576 17.8319 21.569 17.8631 21.5595C19.8241 20.9529 21.8126 20.0376 23.8654 18.5301C23.8834 18.5168 23.8948 18.4968 23.8967 18.4749C24.3971 13.2979 23.0585 8.80101 20.3482 4.81451C20.3416 4.80119 20.3303 4.79166 20.317 4.78594ZM8.02002 15.7474C6.8375 15.7474 5.86313 14.6617 5.86313 13.3284C5.86313 11.9951 6.8186 10.9095 8.02002 10.9095C9.23087 10.9095 10.1958 12.0047 10.1769 13.3284C10.1769 14.6617 9.22141 15.7474 8.02002 15.7474ZM15.9947 15.7474C14.8123 15.7474 13.8379 14.6617 13.8379 13.3284C13.8379 11.9951 14.7933 10.9095 15.9947 10.9095C17.2056 10.9095 18.1705 12.0047 18.1516 13.3284C18.1516 14.6617 17.2056 15.7474 15.9947 15.7474Z" fill="white" />
+						</svg>
+					</a>
+					<a href="https://www.youtube.com/@zeropad_fun" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g clip-path="url(#clip0_435_2984)">
+								<path d="M23.5216 6.81578C23.3859 6.3052 23.1185 5.8392 22.7462 5.46444C22.3738 5.08967 21.9095 4.81928 21.3998 4.68033C19.5234 4.17578 12.0234 4.17578 12.0234 4.17578C12.0234 4.17578 4.52344 4.17578 2.64707 4.68033C2.13737 4.81928 1.6731 5.08967 1.30073 5.46444C0.928354 5.8392 0.660943 6.3052 0.525256 6.81578C0.0234376 8.70033 0.0234375 12.6303 0.0234375 12.6303C0.0234375 12.6303 0.0234376 16.5603 0.525256 18.4449C0.660943 18.9555 0.928354 19.4214 1.30073 19.7962C1.6731 20.171 2.13737 20.4414 2.64707 20.5803C4.52344 21.0849 12.0234 21.0849 12.0234 21.0849C12.0234 21.0849 19.5234 21.0849 21.3998 20.5803C21.9095 20.4414 22.3738 20.171 22.7462 19.7962C23.1185 19.4214 23.3859 18.9555 23.5216 18.4449C24.0234 16.5603 24.0234 12.6303 24.0234 12.6303C24.0234 12.6303 24.0234 8.70033 23.5216 6.81578Z" fill="white" />
+								<path class="path2" d="M9.56934 16.1998V9.0625L15.8421 12.6311L9.56934 16.1998Z" fill="#230CF2" />
+							</g>
+							<defs>
+								<clipPath id="clip0_435_2984">
+									<rect width="24" height="24" fill="white" transform="translate(0 0.630859)" />
+								</clipPath>
+							</defs>
+						</svg>
+					</a>
+				</div>
+				<div class="footer__social">
+				<a href="https://zeropad.fun/media-kit/" style="text-decoration: underline;">Media kit</a>
+			</div>
+				<div class="footer__copy">© 2025 Multi-chain staking platform.</div>
+			</div>
+		</footer>
+	</div>
+	<div id="connect" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button type="button" data-close class="popup__close">
+					<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+				<div class="popup__title title">Subscribe to us</div>
+				<div class="popup__text">In order to connect your wallet, you need to subscribe to us on Twitter.</div>
+				<div class="popup__item">
+					<div class="popup__icon">
+						<svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9.01199 1.95215L5.85341 1.95215C4.67376 1.95215 3.53204 2.4155 2.69479 3.26515C1.85754 4.11479 1.38187 5.25399 1.40095 6.47053C1.38182 7.68706 1.85768 8.82641 2.69479 9.67592C3.551 10.5448 4.65461 11.0083 5.83431 11.0083H8.99289M12.9888 11.0469H16.1474C17.327 11.0469 18.4687 10.5835 19.306 9.73388C20.1432 8.88424 20.6189 7.74504 20.5998 6.5285C20.5998 5.33139 20.1241 4.19214 19.2869 3.34249C18.4497 2.49285 17.3271 2.01013 16.1474 2.01011H12.9888M6.25283 6.45728L15.7286 6.45728" stroke="#248DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</div>
+					<input type="text" class="popup__input" placeholder="Your Twitter profile link">
+				</div>
+				<div class="popup__links">
+					<a href="#" class="popup__link popup__link_green">Subscribe to Twitter</a>
+					<a href="#" class="popup__link">I'm subscribed</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="deposit" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button type="button" data-close class="popup__close">
+					<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+				<div class="popup__title title">Deposit</div>
+				<form data-one-select action="#" class="popup__form">
+					<div class="popup__inner">
+						<div class="popup__box">
+							<div class="popup__label">Select Token</div>
+							<select class="popup__select" id="currency">
+								<option data-asset="../img/icon1.svg" value="1" selected>ETH</option>
+								<option data-asset="../img/rsz_polygon.webp" value="2">POL</option>
+								<option data-asset="../img/rsz_avalanche.webp" value="3">AVAX</option>
+							</select>
+						</div>
+						<div class="popup__box">
+							<div class="popup__label">Select a network</div>
+							<select class="popup__select" id="network">
+								<option data-asset="../img/icon1.svg" value="1" selected>Ethereum</option>
+								<option data-asset="../img/F20250214013812396t6W3LsvAR4tzev.png" value="2">Arbitrum</option>
+								<option data-asset="../img/rsz_optimism.webp" value="3">Optimism</option>
+								<option data-asset="../img/rsz_base.webp" value="4">Base</option>
+								<option data-asset="../img/rsz_blast.webp" value="5">Blast</option>
+								<option data-asset="../img/berachain-icon.png" value="6">Berachain</option>
+								<option data-asset="../img/rsz_abstract.webp" value="7">Abstract</option>
+								<option data-asset="../img/rsz_polygon.webp" value="8">Polygon</option>
+								<option data-asset="../img/rsz_avalanche.webp" value="9">Avalanche</option>
+							</select>
+						</div>
+						<div class="popup__box">
+							<div class="popup__label">Deposit amount</div>
+							<input type="text" class="popup__inp" placeholder="Minimum: 0.005 ETH">
+							<div class="popup__value"><span style="opacity: .5;">You will receive:</span> <span style="color: #c5f604;">1.200 XP</span></div>
+						</div>
+					</div>
+					
+					
+					
+					<button  type="button" class="popup__link popup__link_green popup__link_font js-button1">Make a deposit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<style>
+
+.select__asset img{
+	width: 25px;
+	height: 24px;
+	border-radius: 50%;
+}
+.popup__icon img{
+
+	border-radius: 50%;
+}
+.popup__value {
+	line-height: 125%;
+    font-size: 1rem;
+	opacity: 1;
+    margin-top: .5rem;
+}
+.table-exchange__icon img{
+	border-radius: 50%;
+}
+
+
+</style>
+
+	<div id="withdrawal" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button type="button" data-close class="popup__close">
+					<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+				<div class="popup__title title">Withdrawal</div>
+				<form data-one-select action="#" class="popup__form">
+					<div class="popup__inner">
+						<div class="popup__box">
+							<div class="popup__label">Choose a currency</div>
+							<select class="popup__select" id="currency">
+								<option data-asset="../img/icon1.svg" value="1" selected>ETH</option>
+								<option data-asset="../img/rsz_polygon.webp" value="3">POL</option>
+								<option data-asset="../img/rsz_avalanche.webp" value="4">AVAX</option>
+							</select>
+						</div>
+						<div class="popup__box">
+							<div class="popup__label">Select a network</div>
+							<select class="popup__select" id="network">
+								<option data-asset="../img/icon1.svg" value="1" selected>Ethereum</option>
+								<option data-asset="../img/F20250214013812396t6W3LsvAR4tzev.png" value="2">Arbitrum</option>
+								<option data-asset="../img/rsz_optimism.webp" value="3">Optimism</option>
+								<option data-asset="../img/rsz_base.webp" value="4">Base</option>
+								<option data-asset="../img/rsz_blast.webp" value="5">Blast</option>
+								<option data-asset="../img/berachain-icon.png" value="6">Berachain</option>
+								<option data-asset="../img/rsz_abstract.webp" value="7">Abstract</option>
+								<option data-asset="../img/rsz_polygon.webp" value="8">Polygon</option>
+								<option data-asset="../img/rsz_avalanche.webp" value="9">Avalanche</option>
+							</select>
+						</div>
+						<div class="popup__box">
+							<div class="popup__label">Enter your wallet address</div>
+							<div class="popup__item">
+								<div class="popup__icon">
+									<svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M9.01199 1.95215L5.85341 1.95215C4.67376 1.95215 3.53204 2.4155 2.69479 3.26515C1.85754 4.11479 1.38187 5.25399 1.40095 6.47053C1.38182 7.68706 1.85768 8.82641 2.69479 9.67592C3.551 10.5448 4.65461 11.0083 5.83431 11.0083H8.99289M12.9888 11.0469H16.1474C17.327 11.0469 18.4687 10.5835 19.306 9.73388C20.1432 8.88424 20.6189 7.74504 20.5998 6.5285C20.5998 5.33139 20.1241 4.19214 19.2869 3.34249C18.4497 2.49285 17.3271 2.01013 16.1474 2.01011H12.9888M6.25283 6.45728L15.7286 6.45728" stroke="#248DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+									</svg>
+								</div>
+								<input type="text" class="popup__input" placeholder="EVM wallet address">
+							</div>
+						</div>
+						<div class="popup__box">
+							<div class="popup__label">Amount</div>
+							<div class="popup__block">
+								<div class="popup__icon">
+									<img width="24" height="24"  src="../img/icon1.svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										
+								</div>
+								<input type="text" class="popup__input" placeholder="0.00 ETH">
+								<button type="button" class="popup__all" id="maxButton">Max</button>
+							</div>
+							<div class="popup__value">Available: <span>1.947 ETH</span></div>
+						</div>
+					</div>
+					<button data-close type="button" class="popup__link popup__link_green popup__link_font">Withdrawal</button>
+					<div class="popup__warning">
+						<div class="popup__headline">
+							<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M11 11.8244L11 7.71261M11 14.8721V14.9082M16.1974 18.3327H5.80256C4.38268 18.3327 3.18443 17.3943 2.80743 16.1104C2.6465 15.5624 2.84424 14.9915 3.1467 14.5055L8.34413 5.13362C9.56184 3.17681 12.4382 3.17681 13.6559 5.13362L18.8533 14.5055C19.1558 14.9915 19.3535 15.5624 19.1926 16.1104C18.8156 17.3943 17.6173 18.3327 16.1974 18.3327Z" stroke="#F6EE04" stroke-width="1.83333" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+							<span>Withdrawal Lock Period</span>
+						</div>
+						<div class="popup__desc">
+							<p>Next Withdrawal: July 18, 2025</p>
+							<p>Lock Duration: 30 Days</p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="waite" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button type="button" data-close class="popup__close">
+					<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+				<div class="popup__wait wait-popup">
+					<div class="wait-popup__title">Wait</div>
+					<div class="wait-popup__sub-title">Generating your unique deposit address...</div>
+					<div class="wait-popup__image">
+						<img src="../img/loading.gif" alt="loading">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="nice" class="popup">
+		<div class="popup__wrapper">
+		  <div class="popup__content">
+			<div class="popup__nice nice-popup">
+			  
+			  <div class="nice-popup__circular-timer">
+				<svg class="timer-circle" width="120" height="120" viewBox="0 0 120 120">
+				  <circle cx="60" cy="60" r="45" fill="rgba(255, 255, 255, .05)" stroke="#9AFF00" stroke-width="4" 
+						  stroke-dasharray="314.16" stroke-dashoffset="314.16" 
+						  stroke-linecap="round" transform="rotate(-90 60 60)"/>
+				</svg>
+				<div class="timer-text">
+				  <span class="timer-minutes" id="minutes">19</span>
+				  <span class="timer-separator">:</span>
+				  <span class="timer-seconds" id="seconds">44</span>
+				</div>
+			  </div>
+			  
+			  <div class="nice-popup__sub-title">Your Deposit Address</div>
+			  <div class="nice-popup__row">
+				<div class="nice-popup__address address">0x742d35Cc6635C0532925a3b8D4034DfcD25dB02</div>
+				<div class="nice-popup__copy copy">
+				  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M20 13.1251L20 6.00003C20 4.34317 18.6568 3.00002 17 3.00003L9.875 3.00012M14 21.0001L7.25 21.0001C6.00736 21.0001 5 19.9928 5 18.7501L5 9.00012C5 7.75747 6.00736 6.75011 7.25 6.75011L14 6.75011C15.2426 6.75011 16.25 7.75747 16.25 9.00011L16.25 18.7501C16.25 19.9928 15.2426 21.0001 14 21.0001Z" stroke="#248DFF" stroke-width="2" stroke-linecap="round" />
+				  </svg>
+				  <span>Copied!</span>
+				</div>
+			  </div>
+			  
+			  <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 0.5rem;margin-bottom: 20px;">
+				<div class="popup__box" style="flex: 1; max-width: 50%;height: 100%;">
+				  <div class="select__body" style="height: 100%;">
+					<button disabled type="button" class="set__title" style="height: 3rem;">
+					  <span class="set__value">
+						<span class="select__content">
+						  <span class="select__row">
+							<span class="select__asset"><img src="../img/icon1.svg" alt=""></span>
+							<span class="select__text">Ethereum</span>
+						  </span>
+						</span>
+					  </span>
+					</button>
+				  </div>
+				</div>
+				<div class="nice-popup_gg" style="flex: 1; max-width: 50%; display: flex; align-items: center; justify-content: space-between; text-align: center;">
+				  <div class="nice-popup__address amount">0.2 ETH</div>
+				  <div class="nice-popup__copy copy2">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					  <path d="M20 13.1251L20 6.00003C20 4.34317 18.6568 3.00002 17 3.00003L9.875 3.00012M14 21.0001L7.25 21.0001C6.00736 21.0001 5 19.9928 5 18.7501L5 9.00012C5 7.75747 6.00736 6.75011 7.25 6.75011L14 6.75011C15.2426 6.75011 16.25 7.75747 16.25 9.00011L16.25 18.7501C16.25 19.9928 15.2426 21.0001 14 21.0001Z" stroke="#248DFF" stroke-width="2" stroke-linecap="round" />
+					</svg>
+					<span>Copied!</span>
+				  </div>
+				</div>
+			  </div>
+			  
+
+			  <div class="nice-popup__text">
+				<p>Send only ETH to this address.</p>
+				<p>Other tokens will be lost</p>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+	  </div>
+	
+
+
+	  <div id="success_deposit" class="popup">
+		<div class="popup__wrapper">
+		  <div class="popup__content">
+			
+			<div class="popup__nice nice-popup">
+			 
+			  <div class="success_deposit_image">
+				<img src="../img/success_deposit.png" alt="">
+			  </div>
+			  <div class="popup__title title" style="text-align: center;">Deposit Successful!</div>
+			  <div class="nice-popup__sub-title" style="width: 70%;margin: 0 auto;margin-bottom: 30px;">Your deposit has been received. XP have been added to your balance.</div>
+			  
+			  
+
+			  
+			  <button type="button" onclick="closeAllPopups()" class="nice-popup__button">Continue Farming</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	  <div id="expired_deposit" class="popup">
+		<div class="popup__wrapper">
+		  <div class="popup__content">
+			<button type="button" data-close class="popup__close">
+				<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</button>
+			<div class="popup__nice nice-popup">
+			 
+			  <div class="success_deposit_image">
+				<img src="../img/expired_deposit.png" alt="">
+			  </div>
+			  <div class="popup__title title" style="text-align: center;">Time is over</div>
+			  <div class="nice-popup__sub-title" style="width: 70%;margin: 0 auto;margin-bottom: 10px;">The deposit time has expired</div>
+			  
+			  
+
+			  
+			 
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+
+
+	  <div id="success_withdrow" class="popup">
+		<div class="popup__wrapper">
+		  <div class="popup__content">
+			
+			<div class="popup__nice nice-popup">
+			 
+			  <div class="success_deposit_image">
+				<img src="../img/success_deposit.png" alt="">
+			  </div>
+			  <div class="popup__title title" style="text-align: center;">Withdrawal Successful</div>
+			  <div class="nice-popup__sub-title" style="width: 70%;margin: 0 auto;margin-bottom: 30px;">Your withdrawal request has been successfully processed</div>
+			  
+			  
+	
+			  
+			  <button type="button" onclick="closeAllPopups()" class="nice-popup__button">Close</button>
+			</div>
+		  </div>
+		</div>
+	</div>
+	
+
+
+	<div id="xconnect" class="popup">
+		<div class="popup__wrapper">
+		  <div class="popup__content">
+			<button onclick="closeAllPopups()" type="button" data-close class="popup__close">
+				<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</button>
+			<div class="popup__nice nice-popup">
+			 
+			  <div  style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;"><img width="117" height="106" src="../img/x-image.png"></div>
+			  <div class="popup__title title" style="text-align: center;">+200 XP</div>
+			  <div class="nice-popup__sub-title" style="width: 100%;margin: 0 auto;margin-bottom: 30px;">Subscribe to our Twitter account and receive a 200 XP welcome bonus.</div>
+				
+			  <div style="display: flex;align-items: center;justify-content: center;">
+				<button type="button" id="mg-restart" onclick="openXchecksubscribeModal()" class="nice-popup__button" ">Subscribe</button>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	  <div id="xchecksubscribe" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button onclick="closeAllPopups()" type="button" data-close class="popup__close">
+					<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+				<div class="popup__title title">Subscribe to us</div>
+				<div class="popup__text">Follow on Twitter. Paste your profile link and tap "Verify".</div>
+				<div class="popup__item" >
+					<div class="popup__icon">
+						<svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9.01199 1.95215L5.85341 1.95215C4.67376 1.95215 3.53204 2.4155 2.69479 3.26515C1.85754 4.11479 1.38187 5.25399 1.40095 6.47053C1.38182 7.68706 1.85768 8.82641 2.69479 9.67592C3.551 10.5448 4.65461 11.0083 5.83431 11.0083H8.99289M12.9888 11.0469H16.1474C17.327 11.0469 18.4687 10.5835 19.306 9.73388C20.1432 8.88424 20.6189 7.74504 20.5998 6.5285C20.5998 5.33139 20.1241 4.19214 19.2869 3.34249C18.4497 2.49285 17.3271 2.01013 16.1474 2.01011H12.9888M6.25283 6.45728L15.7286 6.45728" stroke="#248DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						</div>
+						<input id="twitterInput"  type="text" class="popup__input" placeholder="https://x.com/yourhandle">
+						
+					</div>
+					<p  id="error_message" style="color: red; font-size: 16px;font-weight: 500; margin-bottom: 15px;margin-top: 15px;display: none;">Error message</p>
+					<div class="popup__links">
+						
+						<a style="cursor: pointer;" class="popup__link popup__link_green" id="subscribeBtn" href='https://x.com/ZeroPad_fun' target="_blank" >Subscribe on Twitter</a>
+						<a style="cursor: pointer;" class="popup__link" style="display: none;" id="subscribedBtn" >Verify</a>
+					</div>
+				</div>
+			</div>
+		  </div>
+
+		  <div id="success_verify" class="popup">
+			<div class="popup__wrapper">
+			  <div class="popup__content">
+				
+				<div class="popup__nice nice-popup">
+				 
+				  <div class="success_deposit_image" style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+					<img src="../img/success_deposit.png" alt="">
+				  </div>
+				  <div class="popup__title title" style="text-align: center;">Twitter Verification Successful</div>
+				  <div class="nice-popup__sub-title" style="width: 70%;margin: 0 auto;margin-bottom: 30px;">200 XP credited. You can now use all platform features.</div>
+				  
+				  
+			
+				  
+				  <button type="button" onclick="closeAllPopups()" class="nice-popup__button">Continue Farming</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+
+		 
+
+				  
+
+
+
+<style>
+.nice-popup__circular-timer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1rem auto;
+}
+.success_deposit_image {
+	position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem auto;
+}
+
+.timer-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  font-family: 'Courier New', monospace;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.timer-minutes,
+.timer-seconds {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.timer-separator {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  
+}
+
+
+.timer-circle circle {
+  animation: timer-progress 900s linear infinite;
+}
+
+@keyframes timer-progress {
+  from {
+    stroke-dashoffset: 314.16; 
+  }
+  to {
+    stroke-dashoffset: 0; 
+  }
+}
+
+
+.set__title {
+	cursor: default;
+	color: inherit;
+    text-align: left;
+    background: #161047;
+    cursor: pointer;
+    width: 100%;
+    border-radius: .75rem;
+    height: 2.75rem;
+    color: #fff;
+	border: 3px solid rgba(255, 255, 255, .05);
+    font-size: 1rem;
+
+}
+
+.nice-popup_gg:not(:last-child) {
+    margin-bottom: .5rem;
+}
+.nice-popup_gg {
+    background: #161047;
+    border-radius: .75rem;
+    padding: .625rem .75rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: .4375rem;
+	border: 3px solid rgba(255, 255, 255, .05);
+}
+
+.set__value {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 .625rem;
+    gap: .625rem;
+}
+
+.nice-popup__timer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin: 20px 0;
+}
+
+.nice-popup__timer-field {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px 15px;
+	background: rgba(255,255,255,.05);
+	border-radius: 8px;
+	min-width: 60px;
+}
+
+.nice-popup__timer-value {
+	font-size: 24px;
+	font-weight: bold;
+	color: white;
+}
+
+.nice-popup__timer-label {
+	font-size: 12px;
+	color: #666;
+	margin-top: 5px;
+}
+
+.nice-popup__timer-separator {
+	font-size: 24px;
+	font-weight: bold;
+	color: #248DFF;
+}
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+	<div id="preloader">
+
+		<script>
+			function preloader() {
+				const container = document.querySelector('#preloader');
+
+				const imageElements = document.querySelector('[data-preloader]') ?
+					document.querySelectorAll('[data-preloader] img') :
+					document.querySelectorAll('img');
+
+				const videoElements = document.querySelectorAll('video');
+
+				const totalAssets = imageElements.length + videoElements.length;
+				if (totalAssets === 0) {
+					container.remove();
+					return;
+				}
+
+				const html = document.documentElement;
+				html.classList.add('loading', 'lock');
+
+				const template = `
+				<div class="preloader">
+					<div class="preloader__image">
+						<img src="../files/loader.gif" alt="loader">
+					</div>
+					<div class="preloader__body">
+						<div class="preloader__text">...Loading...</div>
+						<div class="preloader__line"><span></span></div>
+					</div>
+				</div>`;
+				document.querySelector('html').insertAdjacentHTML('beforeend', template);
+
+				const bar = document.querySelector('.preloader__line span');
+
+				let loadedCount = 0;
+				let visualProgress = 0;
+
+				const updateProgress = () => {
+					const percent = Math.round((100 / totalAssets) * loadedCount);
+					if (bar) bar.style.width = `${percent}%`;
+
+					if (visualProgress < percent) {
+						visualProgress++;
+						requestAnimationFrame(updateProgress);
+					} else if (visualProgress >= 100) {
+						finishLoading();
+					}
+				};
+
+				const onAssetLoaded = () => {
+					loadedCount++;
+					updateProgress();
+				};
+
+			
+				imageElements.forEach(img => {
+					const clone = new Image();
+					clone.onload = onAssetLoaded;
+					clone.onerror = onAssetLoaded;
+					clone.src = img.dataset.src || img.src;
+				});
+
+			
+				videoElements.forEach(video => {
+					if (video.readyState >= 2) {
+						onAssetLoaded();
+					} else {
+						video.addEventListener('loadeddata', onAssetLoaded, {
+							once: true
+						});
+						video.addEventListener('error', onAssetLoaded, {
+							once: true
+						});
+					}
+				});
+
+				function finishLoading() {
+					html.classList.add('loaded');
+					html.classList.remove('loading', 'lock');
+
+					setTimeout(() => {
+						document.querySelector('.preloader')?.remove();
+						container.remove();
+					}, 100);
+				}
+			}
+
+			preloader();
+		</script>
+	</div>
+	
+	<script src="../js/app.js?_v=20250709161633"></script>
+	<script src="js/index.js"></script>
+
+	
+
+
+
+
+
+
+
+<style>
+
+
+#xconnect .nice-popup__button{
+		width: 50%;
+		background: rgba(35, 12, 242, 1);
+	}
+	#xconnect .nice-popup__button:hover{
+		background: rgba(197, 246, 4, 1);
+	}
+
+	#xchecksubscribe .popup__input::placeholder,
+	#xchecksubscribe .popup__input::-webkit-input-placeholder,
+	#xchecksubscribe .popup__input::-moz-placeholder,
+	#xchecksubscribe .popup__input:-ms-input-placeholder,
+	#xchecksubscribe .popup__input::-ms-input-placeholder{
+		font-size: 0.5em;
+	}
+
+	.relative {
+		position: relative;
+	}
+	.flex {
+		display: flex;
+	}
+	.aspect-square {
+		aspect-ratio: 1;
+	}
+	.w-18 {
+		width: calc(.25rem * 16);
+	}
+	.w-9 {
+		width: calc(.25rem * 8);
+	}
+	.w-8 {
+		width: calc(.25rem * 8);
+	}
+	.items-center {
+		align-items: center;
+	}
+	.justify-center {
+		justify-content: center;
+	}
+	.rounded-full {
+		border-radius: 3.40282e+38px;
+	}
+	.border {
+		border-style: solid;
+		border-width: 1px;
+	}
+	.border-epic\/50 {
+		border-color: color-mix(in srgb, rgb(211 88 255) 50%, transparent);
+	}
+	@supports (color:color-mix(in lab,red,red)) {
+		.border-epic\/50 {
+			border-color: color-mix(in oklab, rgb(211 88 255) 50%, transparent);
+		}
+	}
+	.p-1 {
+		padding: calc(.25rem * 1);
+	}
+	.p-0\.5 {
+		padding: calc(.25rem * 0.5);
+	}
+	.p-0\.25 {
+		padding: calc(.25rem * 0.25);
+	}
+	.w-full {
+		width: 100%;
+	}
+	.gap-1 {
+		gap: calc(.25rem * 1);
+	}
+	.gap-0\.5 {
+		gap: calc(.25rem * 0.5);
+	}
+	.gap-0\.25 {
+		gap: calc(.25rem * 0.25);
+	}
+	.border-epic {
+		border-color: rgb(211 88 255);
+	}
+	.bg-epic-transparent-1 {
+		background-color: rgb(211 88 255 /8%);
+	}
+	.h-full {
+		height: 100%;
+	}
+	.w-\[75\%\] {
+		width: 75%;
+	}
+	.overflow-visible {
+		overflow: visible;
+	}
+	.fill-current {
+		fill: currentColor;
+	}
+	.absolute {
+		position: absolute;
+	}
+	.-bottom-1 {
+		bottom: calc(.25rem * -1);
+	}
+	.-bottom-0\.5 {
+		bottom: calc(.25rem * -0.5);
+	}
+	.-bottom-0\.25 {
+		bottom: calc(.25rem * -0.25);
+	}
+	.px-2 {
+		padding-inline: calc(.25rem * 2);
+	}
+	.rounded {
+		border-radius: .25rem;
+	}
+	.uppercase {
+		text-transform: uppercase;
+	}
+	.text-white {
+		color: rgb(255 255 255);
+	}
+	.whitespace-nowrap {
+		white-space: nowrap;
+	}
+	.text-xs {
+		font-size: 12px;
+	}
+	.font-mono {
+		font-family: var(--font-family-mono);
+	}
+	.px-1\.5 {
+		padding-inline: calc(.25rem * 1.5);
+	}
+	.bg-epic {
+		background-color: rgb(211 88 255);
+	}
+	.border-frosted-3 {
+		border-color: rgb(255 255 255 /12%);
+	}
+	.leading-normal {
+		--tw-leading: 1.5;
+		line-height: 1.5;
+	}
+	.text-center {
+		text-align: center;
+	}
+	.shadow-xs {
+		--tw-shadow: 0px 1px 2px 0px var(--tw-shadow-color, #00000008);
+	}
+
+	.xpBlock {
+    display: flex;
+    align-items: center;
+    
+}
+
+	</style>
+
+
+
+	
+
+
+
+</body>
+
+</html>

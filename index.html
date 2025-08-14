@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Zeropad</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="img/favicon.png">
+	<link
+    rel="preload"
+    href="/fonts/BRENZO-SLAB-PERSONAL-USE.OTF"
+    as="font"
+    type="font/otf"
+    crossorigin
+    fetchpriority="high"
+  >
+	<!-- preloader -->
+	<style>
+		@font-face {
+			font-family: 'Brenzo';
+			src: url('/fonts/BRENZO-SLAB-PERSONAL-USE.OTF') format('opentype');
+			font-weight: normal;
+			font-style: normal;
+			font-display: swap;
+		}
+
+		
+
+		* {
+			padding: 0px;
+			margin: 0px;
+			border: 0px;
+		}
+
+		*,
+		*:before,
+		*:after {
+			box-sizing: border-box;
+		}
+
+		#preloader {
+			pointer-events: none;
+			z-index:999;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: grid;
+			grid-template-rows: 5rem 1fr 5rem;
+			grid-template-columns: 1fr;
+			justify-content: center;
+			align-items: center;
+			background: #09033d;
+		}
+
+		.preloader__image {
+			text-align: center;
+			grid-row: 2 / 3;
+			font-family: Brenzo;
+
+		}
+
+		.preloader__image img {
+			max-width: 100%;
+		}
+
+		.wave {
+			display: inline-block;
+			font-size: 2rem;
+			font-weight: bold;
+			letter-spacing: 0.1em;
+		}
+
+		.wave span {
+			display: inline-block;
+			animation: float 4s infinite ease-in-out;
+			animation-delay: calc(var(--i) * 0.15s);
+		}
+
+		@keyframes float {
+
+			0%,
+			100% {
+				transform: translateY(0);
+			}
+
+			25% {
+				transform: translateY(20px);
+			}
+
+			50% {
+				transform: translateY(0);
+			}
+
+			75% {
+				transform: translateY(-20px);
+			}
+		}
+
+		.preloader__body {
+			grid-row: 3 / 4;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		}
+
+		.preloader__text {
+			font-size: 1rem;
+			color: #fff;
+			opacity: 0.5;
+			margin-bottom: 0.3125rem;
+		}
+
+		.preloader__line {
+			width: 15.5625rem;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 1.0625rem;
+			height: 0.625rem;
+			position: relative;
+		}
+
+		.preloader__line span {
+			display: inline-block;
+			transition: width 0.2s ease;
+			height: 0.625rem;
+			background-color: #c5f604;
+			border-radius: 1.0625rem;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+		}
+
+		.hero__video {
+  width: 100%;
+  height: auto;
+ 
+  pointer-events: none;
+}
+
+
+.hero__video::-webkit-media-controls,
+.hero__video::-webkit-media-controls-enclosure,
+.hero__video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+
+.hero__video::-moz-media-controls {
+  display: none !important;
+}
+
+.hero__video_phone { display: none; }
+.hero__video_pc    { display: block; }
+
+
+@media (max-width: 768px) {
+  .hero__video_pc    { display: none; }
+  .hero__video_phone { display: block; }
+}
+	</style>
+	<link rel="stylesheet" href="css/style.min.css?_v=20250709161633">
+
+	<script src="walletconnect-module/wallet-connect-service.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-QQC5J5R6ZR"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QQC5J5R6ZR');
+</script>
+</head>
+
+<body>
+
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js" integrity="sha256-huW7yWl7tNfP7lGk46XE+Sp0nCotjzYodhVKlwaNeco=" crossorigin="anonymous"></script>
+<script>
+SmoothScroll({
+ 
+    animationTime    : 800,
+  
+    stepSize         : 75,
+
+
+    
+ 
+    accelerationDelta : 30,  
+
+    accelerationMax   : 2,   
+
+ 
+    keyboardSupport   : true,  
+
+    arrowScroll       : 50,
+
+
+    pulseAlgorithm   : true,
+    pulseScale       : 4,
+    pulseNormalize   : 1,
+
+  
+    touchpadSupport   : true,
+})
+</script>
+
+	<div id="preloader">
+		<div class="preloader__image">
+			<p class="wave">
+				<span style="--i:0">Z</span>
+				<span style="--i:1">e</span>
+				<span style="--i:2">r</span>
+				<span style="--i:3">o</span>
+				<span style="--i:4">P</span>
+				<span style="--i:5">a</span>
+				<span style="--i:6">d</span>
+			</p>
+		</div>
+		<div class="preloader__body">
+			<div class="preloader__text">...Loading...</div>
+			<div class="preloader__line"><span></span></div>
+		</div>
+</div>
+
+	<div class="wrapper wrapper_light">
+		<header class="header" id="header">
+			<div class="header__container" style="display: flex;">
+				<a href="/" class="header__logo">
+					<img src="img/logo.svg" alt="logo Zeropad">
+				</a>
+				<a  href="#" class="header__link connect-wallet-btn">
+					<svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M19.6399 11.7607V14.2008C19.6399 15.3054 18.7445 16.2008 17.6399 16.2008H3.39982C2.29527 16.2008 1.39985 15.3054 1.39982 14.2008L1.39948 3.80085C1.39944 2.69625 2.29488 1.80078 3.39948 1.80078H17.6399C18.7445 1.80078 19.6399 2.69621 19.6399 3.80078V6.1717M20.5999 11.7607H17.4799C16.0219 11.7607 14.8399 10.5787 14.8399 9.12066C14.8399 7.66263 16.0219 6.48067 17.4799 6.48067H20.5999V11.7607Z" stroke="white" stroke-width="2" stroke-linejoin="round"></path>
+					</svg>
+					<span>Connect wallet</span>
+				</a>
+			</div>
+		</header>
+		<main id="main">
+			<div class="hero">
+				<div class="hero__container" id="hero__container">
+  <video
+    id="hero-video-desktop"
+    class="hero__video hero__video_pc"
+    autoplay muted loop playsinline
+    oncontextmenu="return false;"
+    tabindex="-1"
+  >
+    <source
+      src="segments/playlist.m3u8"
+      type="application/vnd.apple.mpegurl"
+    >
+  </video>
+
+  <!-- Мобильный HLS -->
+  <video
+    id="hero-video-mobile"
+    class="hero__video hero__video_phone"
+    autoplay muted loop playsinline
+    oncontextmenu="return false;"
+    tabindex="-1"
+  >
+    <source
+      src="/videos/video-phone/phone.m3u8"
+      type="application/vnd.apple.mpegurl"
+    >
+  </video>
+				</div>
+			</div>
+			<section class="how">
+				<div class="how__container">
+					<h2 class="how__title title">How it works?</h2>
+					<div class="how__sub-title">Create. Mint. Watch it grow.</div>
+					<div class="how__body">
+						<div class="how__item">
+							<div class="how__video">
+								<video loop autoplay muted playsinline>
+									<source src="files/1.mp4" type="video/mp4">
+								</video>
+							</div>
+							<div class="how__caption">Create in seconds</div>
+							<div class="how__text">Upload your image, name it, hit "Mint". That's it.</div>
+						</div>
+						<div class="how__item">
+							<div class="how__video">
+								<video loop autoplay muted playsinline>
+									<source src="files/2.mp4" type="video/mp4">
+								</video>
+							</div>
+							<div class="how__caption">The earlier — the cheaper</div>
+							<div class="how__text">Each mint pushes the price higher.</div>
+						</div>
+						<div class="how__item">
+							<div class="how__video">
+								<video loop autoplay muted playsinline>
+									<source src="files/3.mp4" type="video/mp4">
+								</video>
+							</div>
+							<div class="how__caption">Bonding curve</div>
+							<div class="how__text">Watch the curve fill up with every mint.</div>
+						</div>
+						<div class="how__item">
+							<div class="how__video">
+								<video loop autoplay muted playsinline>
+									<source src="files/4.mp4" type="video/mp4">
+								</video>
+							</div>
+							<div class="how__caption">Live on <br> OpenSea</div>
+							<div class="how__text">NFT is instantly tradable. No setup, no fees.</div>
+						</div>
+					</div>
+					<button type="button"  class="how__link link connect-wallet-btn">Connect wallet</button>
+				</div>
+			</section>
+			<div class="block-rotate">
+				<div class="block-rotate__container">
+					<div class="block-rotate__row">
+						<div class="block-rotate__icon">
+							<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path opacity="0.5" d="M9.08128 0.326987L9.96503 3.78129C10.5868 6.21168 12.6445 8.00588 15.1369 8.29098L18.6793 8.69619L15.225 9.57994C12.7946 10.2017 11.0004 12.2594 10.7153 14.7518L10.3101 18.2942L9.42638 14.8399C8.80459 12.4096 6.74694 10.6153 4.25453 10.3302L0.712075 9.92503L4.16638 9.04129C6.59677 8.4195 8.39097 6.36186 8.67607 3.86944L9.08128 0.326987Z" fill="#28330B" />
+							</svg>
+						</div>
+						<div class="block-rotate__text">Invite your friends and pick up yours %</div>
+						<div class="block-rotate__icon">
+							<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path opacity="0.5" d="M9.08128 0.326987L9.96503 3.78129C10.5868 6.21168 12.6445 8.00588 15.1369 8.29098L18.6793 8.69619L15.225 9.57994C12.7946 10.2017 11.0004 12.2594 10.7153 14.7518L10.3101 18.2942L9.42638 14.8399C8.80459 12.4096 6.74694 10.6153 4.25453 10.3302L0.712075 9.92503L4.16638 9.04129C6.59677 8.4195 8.39097 6.36186 8.67607 3.86944L9.08128 0.326987Z" fill="#28330B" />
+							</svg>
+						</div>
+					</div>
+					<div class="block-rotate__image">
+						<img src="img/image.webp" alt="image">
+					</div>
+				</div>
+			</div>
+			<section class="invite">
+				<div class="invite__container">
+					<h2 class="invite__title title">Invite & Earn</h2>
+					<div class="invite__body">
+						<div class="invite__item">
+							<div class="invite__icon">
+								<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" fill="url(#paint0_linear_361_8581)" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="#FF8800" stroke-opacity="0.2" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="url(#paint1_linear_361_8581)" />
+									<path d="M22.2487 12.8602C24.0878 11.3546 26.439 10.4512 29.0012 10.4512C34.8922 10.4512 39.6679 15.2268 39.6679 21.1178C39.6679 23.6789 38.7653 26.0291 37.2609 27.8678M31.6654 29.1178C31.6654 35.0089 26.8897 39.7845 20.9987 39.7845C15.1077 39.7845 10.332 35.0089 10.332 29.1178C10.332 23.2268 15.1077 18.4512 20.9987 18.4512C26.8897 18.4512 31.6654 23.2268 31.6654 29.1178Z" stroke="#FF8800" stroke-width="3.05556" stroke-linecap="round" stroke-linejoin="round" />
+									<defs>
+										<linearGradient id="paint0_linear_361_8581" x1="49.8057" y1="0.117185" x2="0.194248" y2="50.1172" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="#FF8800" stop-opacity="0.07" />
+											<stop offset="0.5" stop-color="#FF8800" stop-opacity="0.03" />
+											<stop offset="1" stop-color="#FF8800" stop-opacity="0.12" />
+										</linearGradient>
+										<linearGradient id="paint1_linear_361_8581" x1="-5.1295e-08" y1="49.0826" x2="55.8079" y2="40.9353" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="white" stop-opacity="0.1" />
+											<stop offset="0.5" stop-color="white" stop-opacity="0.03" />
+											<stop offset="1" stop-color="white" stop-opacity="0.15" />
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+							<div class="invite__content">
+								<div class="invite__caption">121,522</div>
+								<div class="invite__text">Total Points</div>
+							</div>
+						</div>
+						<div class="invite__item">
+							<div class="invite__icon">
+								<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" fill="url(#paint0_linear_361_8586)" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="#3CFF00" stroke-opacity="0.2" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="url(#paint1_linear_361_8586)" />
+									<path d="M9 33.1172L17.96 24.5018L25.64 31.8864L41 17.1172M41 17.1172H29.48M41 17.1172V28.1941" stroke="#3CFF00" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round" />
+									<defs>
+										<linearGradient id="paint0_linear_361_8586" x1="49.8057" y1="0.117185" x2="0.194248" y2="50.1172" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="#3CFF00" stop-opacity="0.07" />
+											<stop offset="0.5" stop-color="#3CFF00" stop-opacity="0.03" />
+											<stop offset="1" stop-color="#3CFF00" stop-opacity="0.12" />
+										</linearGradient>
+										<linearGradient id="paint1_linear_361_8586" x1="-5.1295e-08" y1="49.0826" x2="55.8079" y2="40.9353" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="white" stop-opacity="0.1" />
+											<stop offset="0.5" stop-color="white" stop-opacity="0.03" />
+											<stop offset="1" stop-color="white" stop-opacity="0.15" />
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+							<div class="invite__content">
+								<div class="invite__caption">+17,000</div>
+								<div class="invite__text">Today's Points</div>
+							</div>
+						</div>
+						<div class="invite__item">
+							<div class="invite__icon">
+								<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" fill="url(#paint0_linear_361_8592)" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="#248DFF" stroke-opacity="0.2" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="url(#paint1_linear_361_8592)" />
+									<path d="M7.40039 36.5137C9.41457 33.1541 13.829 30.8548 20.7161 30.8548C27.6032 30.8548 32.0176 33.1541 34.0318 36.5137M35.306 28.3072C38.9532 30.1308 40.7768 31.9544 42.6004 35.6016M31.5128 14.3685C33.2289 15.2917 34.3955 17.1044 34.3955 19.1896C34.3955 21.2146 33.2954 22.9826 31.6601 23.9285M26.1869 19.1895C26.1869 22.211 23.7375 24.6603 20.7161 24.6603C17.6947 24.6603 15.2453 22.211 15.2453 19.1895C15.2453 16.1681 17.6947 13.7188 20.7161 13.7188C23.7375 13.7188 26.1869 16.1681 26.1869 19.1895Z" stroke="#248DFF" stroke-width="3.66667" stroke-linecap="round" />
+									<defs>
+										<linearGradient id="paint0_linear_361_8592" x1="49.8057" y1="0.117185" x2="0.194248" y2="50.1172" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="#248DFF" stop-opacity="0.07" />
+											<stop offset="0.5" stop-color="#248DFF" stop-opacity="0.03" />
+											<stop offset="1" stop-color="#248DFF" stop-opacity="0.12" />
+										</linearGradient>
+										<linearGradient id="paint1_linear_361_8592" x1="-5.1295e-08" y1="49.0826" x2="55.8079" y2="40.9353" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="white" stop-opacity="0.1" />
+											<stop offset="0.5" stop-color="white" stop-opacity="0.03" />
+											<stop offset="1" stop-color="white" stop-opacity="0.15" />
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+							<div class="invite__content">
+								<div class="invite__caption">352</div>
+								<div class="invite__text">Total Referrals</div>
+							</div>
+						</div>
+						<div class="invite__item">
+							<div class="invite__icon">
+								<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" fill="url(#paint0_linear_361_8598)" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="#8D53FF" stroke-opacity="0.2" />
+									<rect x="0.5" y="0.617188" width="49" height="49" rx="11.5" stroke="url(#paint1_linear_361_8598)" />
+									<path d="M23.5 37.1172L23.5 38.6172L23.5 37.1172ZM38.5 33.3672C39.3284 33.3672 40 32.6956 40 31.8672C40 31.0388 39.3284 30.3672 38.5 30.3672V33.3672ZM30.4 30.3672C29.5716 30.3672 28.9 31.0388 28.9 31.8672C28.9 32.6956 29.5716 33.3672 30.4 33.3672V30.3672ZM32.95 35.917C32.95 36.7454 33.6216 37.417 34.45 37.417C35.2784 37.417 35.95 36.7454 35.95 35.917H32.95ZM35.95 27.817C35.95 26.9886 35.2784 26.317 34.45 26.317C33.6216 26.317 32.95 26.9886 32.95 27.817H35.95ZM27.8447 38.3239C28.6647 38.2062 29.234 37.446 29.1163 36.626C28.9986 35.806 28.2384 35.2366 27.4184 35.3543L27.8447 38.3239ZM26.3436 29.0198C27.1675 29.1062 27.9054 28.5083 27.9918 27.6844C28.0782 26.8605 27.4803 26.1225 26.6564 26.0362L26.3436 29.0198ZM23.5 37.1172L23.5 35.6172C19.9787 35.6172 17.2081 35.0485 15.3776 34.2145C13.4647 33.343 13 32.4144 13 31.8672H11.5H10C10 34.2194 11.8762 35.9159 14.1338 36.9445C16.4737 38.0106 19.7031 38.6172 23.5 38.6172L23.5 37.1172ZM11.5 31.8672H13C13 32.0086 12.9275 31.8328 13.4856 31.3948C13.9906 30.9985 14.7901 30.5718 15.847 30.1798C17.9492 29.4002 20.772 28.8672 23.5 28.8672V27.3672V25.8672C20.429 25.8672 17.2519 26.4591 14.8038 27.367C13.5855 27.8188 12.4724 28.3765 11.6335 29.0348C10.8476 29.6516 10 30.6008 10 31.8672H11.5ZM28 17.6997H26.5C26.5 19.2007 25.1594 20.6172 23.5 20.6172V22.1172V23.6172C26.8112 23.6172 29.5 20.8626 29.5 17.6997H28ZM23.5 22.1172V20.6172C21.8406 20.6172 20.5 19.2007 20.5 17.6997H19H17.5C17.5 20.8626 20.1888 23.6172 23.5 23.6172V22.1172ZM19 17.6997H20.5C20.5 16.128 21.9098 14.6172 23.5 14.6172V13.1172V11.6172C20.1196 11.6172 17.5 14.6076 17.5 17.6997H19ZM23.5 13.1172V14.6172C25.0902 14.6172 26.5 16.128 26.5 17.6997H28H29.5C29.5 14.6076 26.8804 11.6172 23.5 11.6172V13.1172ZM38.5 31.8672V30.3672H34.45V31.8672V33.3672H38.5V31.8672ZM34.45 31.8672V30.3672H30.4V31.8672V33.3672H34.45V31.8672ZM34.45 35.917H35.95V31.8672H34.45H32.95V35.917H34.45ZM34.45 31.8672H35.95V27.817H34.45H32.95V31.8672H34.45ZM27.6315 36.8391L27.4184 35.3543C26.2393 35.5236 24.928 35.6172 23.5 35.6172L23.5 37.1172L23.5 38.6172C25.0573 38.6172 26.5119 38.5152 27.8447 38.3239L27.6315 36.8391ZM23.5 27.3672V28.8672C24.4116 28.8672 25.3765 28.9184 26.3436 29.0198L26.5 27.528L26.6564 26.0362C25.5904 25.9244 24.521 25.8672 23.5 25.8672V27.3672Z" fill="#8D53FF" />
+									<defs>
+										<linearGradient id="paint0_linear_361_8598" x1="49.8057" y1="0.117185" x2="0.194248" y2="50.1172" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="#8D53FF" stop-opacity="0.07" />
+											<stop offset="0.5" stop-color="#8D53FF" stop-opacity="0.03" />
+											<stop offset="1" stop-color="#8D53FF" stop-opacity="0.12" />
+										</linearGradient>
+										<linearGradient id="paint1_linear_361_8598" x1="-5.1295e-08" y1="49.0826" x2="55.8079" y2="40.9353" gradientUnits="userSpaceOnUse">
+											<stop offset="0" stop-color="white" stop-opacity="0.1" />
+											<stop offset="0.5" stop-color="white" stop-opacity="0.03" />
+											<stop offset="1" stop-color="white" stop-opacity="0.15" />
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+							<div class="invite__content">
+								<div class="invite__caption">+1,200</div>
+								<div class="invite__text">Today's from referral</div>
+							</div>
+						</div>
+					</div>
+					<div class="invite__desc">
+						<p>Every time your friend mints NFT through your link, you get a percentage. </p>
+						<p>Do you want to earn money without memes? Just share a ref.</p>
+					</div>
+				</div>
+			</section>
+			<div class="block-rotate block-rotate_reverse">
+				<div class="block-rotate__container">
+					<div class="block-rotate__row">
+						<div class="block-rotate__icon">
+							<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path opacity="0.5" d="M9.08128 0.326987L9.96503 3.78129C10.5868 6.21168 12.6445 8.00588 15.1369 8.29098L18.6793 8.69619L15.225 9.57994C12.7946 10.2017 11.0004 12.2594 10.7153 14.7518L10.3101 18.2942L9.42638 14.8399C8.80459 12.4096 6.74694 10.6153 4.25453 10.3302L0.712075 9.92503L4.16638 9.04129C6.59677 8.4195 8.39097 6.36186 8.67607 3.86944L9.08128 0.326987Z" fill="#28330B" />
+							</svg>
+						</div>
+						<div class="block-rotate__text">Light clicks = easy money</div>
+						<div class="block-rotate__icon">
+							<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path opacity="0.5" d="M9.08128 0.326987L9.96503 3.78129C10.5868 6.21168 12.6445 8.00588 15.1369 8.29098L18.6793 8.69619L15.225 9.57994C12.7946 10.2017 11.0004 12.2594 10.7153 14.7518L10.3101 18.2942L9.42638 14.8399C8.80459 12.4096 6.74694 10.6153 4.25453 10.3302L0.712075 9.92503L4.16638 9.04129C6.59677 8.4195 8.39097 6.36186 8.67607 3.86944L9.08128 0.326987Z" fill="#28330B" />
+							</svg>
+						</div>
+					</div>
+				</div>
+			</div>
+			<section class="nft-bonding">
+				<div class="nft-bonding__container">
+					<h2 class="nft-bonding__title title">Bonding curve for NFT</h2>
+					<div class="nft-bonding__block">
+						<div class="nft-bonding__heading">Bonding curve progress: 79%</div>
+						<div class="nft-bonding__progress"></div>
+						<div class="nft-bonding__text">
+							<p>Graduate this coin to PumpSwap at $59,911 market cap. </p>
+							<p>There is 0.1 ETH in the bonding curve.</p>
+						</div>
+						<div class="nft-bonding__bottom">
+							<div class="nft-bonding__caption">Top holders</div>
+							<div class="nft-bonding__body">
+								<div class="nft-bonding__item">
+									<div class="nft-bonding__box">
+										<div class="nft-bonding__number">1</div>
+										<div class="nft-bonding__label">Dobi</div>
+									</div>
+									<div class="nft-bonding__value">43,2%</div>
+								</div>
+								<div class="nft-bonding__item">
+									<div class="nft-bonding__box">
+										<div class="nft-bonding__number">2</div>
+										<div class="nft-bonding__label">Ariiiol</div>
+									</div>
+									<div class="nft-bonding__value">12,1%</div>
+								</div>
+								<div class="nft-bonding__item">
+									<div class="nft-bonding__box">
+										<div class="nft-bonding__number">3</div>
+										<div class="nft-bonding__label">Vivocash</div>
+									</div>
+									<div class="nft-bonding__value">10,6%</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="nft-bonding__desc">
+						<p>A bonding curve is a pricing model where each mint makes the next one more expensive.</p>
+						<p>It rewards early users and builds hype — no fixed supply needed. Demand sets the value.</p>
+					</div>
+					<button type="button"  class="nft-bonding__link link connect-wallet-btn">Connect wallet</button>
+				</div>
+			</section>
+			<section class="why">
+				<div class="why__container">
+					<div class="why__body">
+						<div class="why__top top-block">
+							<div class="top-block__item top-block__item_1">
+								<div class="top-block__value">Smart</div>
+								<div class="top-block__label">Price increase</div>
+							</div>
+							<div class="top-block__item top-block__item_2">
+								<img src="img/why-image2.webp" alt="image">
+							</div>
+							<div class="top-block__item top-block__item_3">
+								<div class="top-block__value">Trade</div>
+								<div class="top-block__label">Immediately</div>
+							</div>
+							<div class="top-block__arrow">
+								<svg width="150" height="146" viewBox="0 0 150 146" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M1.07359 17.2557C21.8643 6.75604 35.4027 13.2557 40.7212 31.2548" stroke="#C5F604" stroke-dasharray="14 14" />
+									<path d="M147.575 81.2568C147.575 102.256 39.7694 116.5 39.769 92.5009" stroke="#C5F604" stroke-dasharray="14 14" />
+								</svg>
+							</div>
+						</div>
+						<div class="why__content">
+							<h2 class="why__title title">Why Choose Us?</h2>
+							<div class="why__text">
+								<p>A bonding curve is a pricing model where each mint makes the next one more expensive.
+								</p>
+								<p>It rewards early users and builds hype — no fixed supply needed. Demand sets the
+									value.</p>
+							</div>
+							<button type="button"  class="why__link link connect-wallet-btn">Connect wallet</button>
+						</div>
+						<div class="why__top bottom-block">
+							<div class="bottom-block__item bottom-block__item_1">
+								<img src="img/why-image4.webp" alt="image">
+							</div>
+							<div class="bottom-block__item bottom-block__item_2">
+								<div class="bottom-block__value">Mint</div>
+								<div class="bottom-block__label">In seconds</div>
+							</div>
+							<div class="bottom-block__item bottom-block__item_3">
+								<img src="img/why-image3.webp" alt="image">
+							</div>
+							<div class="bottom-block__item bottom-block__item_4">
+								<div class="bottom-block__value">0%</div>
+								<div class="bottom-block__label">Commission</div>
+							</div>
+							<div class="bottom-block__item bottom-block__item_5">
+								<img src="img/why-image5.webp" alt="image">
+							</div>
+							<div class="bottom-block__arrow">
+								<svg width="311" height="216" viewBox="0 0 311 216" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M83.5797 63.2557C47.3171 72.2559 6.21894 43.2552 6.21856 19.2565" stroke="#C5F604" stroke-dasharray="14 14" />
+									<path d="M253.29 16.2538C217.511 12.2539 249.474 42.4976 211.761 38.499" stroke="#C5F604" stroke-dasharray="14 14" />
+									<path d="M279.883 47.7559C279.883 75.2559 299.223 89.7564 272.63 118.757" stroke="#C5F604" stroke-dasharray="14 14" />
+									<path d="M175.929 194.755C197.204 202.256 220.896 194.754 233.466 177.256" stroke="#C5F604" stroke-dasharray="14 14" />
+								</svg>
+							</div>
+						</div>
+						<div class="why__items">
+							<div class="why__item why__item_1">
+								<div class="why__value">0%</div>
+								<div class="why__label">Commission</div>
+							</div>
+							<div class="why__item why__item_2">
+								<img src="img/why-image1.webp" alt="image">
+							</div>
+							<div class="why__item why__item_3">
+								<div class="why__value">Trade</div>
+								<div class="why__label">Immediately</div>
+							</div>
+							<div class="why__item why__item_4">
+								<img src="img/why-image2.webp" alt="image">
+							</div>
+							<div class="why__item why__item_5">
+								<div class="why__value">Mint</div>
+								<div class="why__label">In seconds</div>
+							</div>
+							<div class="why__item why__item_6">
+								<img src="img/why-image3.webp" alt="image">
+							</div>
+							<div class="why__item why__item_7">
+								<div class="why__value">Smart</div>
+								<div class="why__label">Price increase</div>
+							</div>
+							<div class="why__item why__item_8">
+								<img src="img/why-image4.webp" alt="image">
+							</div>
+							<div class="why__item why__item_9">
+								<div class="why__value">hype</div>
+								<div class="why__label">Potential</div>
+							</div>
+							<div class="why__item why__item_10">
+								<img src="img/why-image5.webp" alt="image">
+							</div>
+						</div>
+						<div class="why__arrow">
+							<svg width="831" height="363" viewBox="0 0 831 363" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M674 57C697 57 724 63 733 66.5" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M796 133C789.302 158 840 151 828 176" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M474 56.0013C520 68.3269 548.081 33.0013 591 44.5013" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M75 95.5C89.3333 85 124.2 62.7 149 57.5" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M241 29.0003C267.5 21.8996 287.5 -8.9997 323.5 4.0003" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M802 231.5C792.5 253.5 776.5 275 751 276.5" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M524 311C495.5 316.5 497 377.5 454.5 359.5" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M384.5 329.499C353.5 308.999 317 292.999 272 300.999" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M88 331.5C42 339 47 301.5 36.5 276" stroke="#C5F604" stroke-dasharray="14 14" />
+								<path d="M14.5005 221.5C9.83381 216.167 0.700478 202 1.50048 188" stroke="#C5F604" stroke-dasharray="14 14" />
+							</svg>
+						</div>
+					</div>
+					<div class="why__image">
+						<img src="img/why-image6.webp" alt="image">
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="footer" id="footer">
+			<div class="footer__container">
+				<div class="footer__logo">
+					<img src="img/logo.svg" alt="logo Zeropad">
+				</div>
+				<div class="footer__social">
+					<a href="https://x.com/ZeroPad_fun" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M18.3263 2.53516H21.6998L14.3297 10.9586L23 22.4211H16.2112L10.894 15.4692L4.80995 22.4211H1.43443L9.31743 13.4113L1 2.53516H7.96111L12.7674 8.88949L18.3263 2.53516ZM17.1423 20.4019H19.0116L6.94539 4.44829H4.93946L17.1423 20.4019Z" fill="white" />
+						</svg>
+					</a>
+					<a href="https://discord.gg/MhNGYyPD" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M20.317 4.78594C18.7873 4.08406 17.147 3.56695 15.4319 3.27077C15.4007 3.26506 15.3695 3.27934 15.3534 3.30791C15.1424 3.68313 14.9087 4.17263 14.7451 4.55737C12.9004 4.2812 11.0652 4.2812 9.25832 4.55737C9.09465 4.16407 8.85248 3.68313 8.64057 3.30791C8.62448 3.2803 8.59328 3.26601 8.56205 3.27077C6.84791 3.566 5.20756 4.08312 3.67693 4.78594C3.66368 4.79166 3.65233 4.80119 3.64479 4.81356C0.533392 9.46192 -0.31895 13.996 0.0991801 18.4739C0.101072 18.4958 0.11337 18.5168 0.130398 18.5301C2.18321 20.0376 4.17171 20.9529 6.12328 21.5595C6.15451 21.569 6.18761 21.5576 6.20748 21.5319C6.66913 20.9014 7.08064 20.2367 7.43348 19.5377C7.4543 19.4967 7.43442 19.4482 7.39186 19.432C6.73913 19.1844 6.1176 18.8825 5.51973 18.5396C5.47244 18.512 5.46865 18.4444 5.51216 18.412C5.63797 18.3177 5.76382 18.2196 5.88396 18.1206C5.90569 18.1025 5.93598 18.0987 5.96153 18.1101C9.88928 19.9034 14.1415 19.9034 18.023 18.1101C18.0485 18.0977 18.0788 18.1016 18.1015 18.1196C18.2216 18.2187 18.3475 18.3177 18.4742 18.412C18.5177 18.4444 18.5149 18.512 18.4676 18.5396C17.8697 18.8891 17.2482 19.1844 16.5945 19.431C16.552 19.4472 16.533 19.4967 16.5538 19.5377C16.9143 20.2357 17.3258 20.9005 17.7789 21.5309C17.7978 21.5576 17.8319 21.569 17.8631 21.5595C19.8241 20.9529 21.8126 20.0376 23.8654 18.5301C23.8834 18.5168 23.8948 18.4968 23.8967 18.4749C24.3971 13.2979 23.0585 8.80101 20.3482 4.81451C20.3416 4.80119 20.3303 4.79166 20.317 4.78594ZM8.02002 15.7474C6.8375 15.7474 5.86313 14.6617 5.86313 13.3284C5.86313 11.9951 6.8186 10.9095 8.02002 10.9095C9.23087 10.9095 10.1958 12.0047 10.1769 13.3284C10.1769 14.6617 9.22141 15.7474 8.02002 15.7474ZM15.9947 15.7474C14.8123 15.7474 13.8379 14.6617 13.8379 13.3284C13.8379 11.9951 14.7933 10.9095 15.9947 10.9095C17.2056 10.9095 18.1705 12.0047 18.1516 13.3284C18.1516 14.6617 17.2056 15.7474 15.9947 15.7474Z" fill="white" />
+						</svg>
+					</a>
+					<a href="https://www.youtube.com/@zeropad_fun" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g clip-path="url(#clip0_435_2984)">
+								<path d="M23.5216 6.81578C23.3859 6.3052 23.1185 5.8392 22.7462 5.46444C22.3738 5.08967 21.9095 4.81928 21.3998 4.68033C19.5234 4.17578 12.0234 4.17578 12.0234 4.17578C12.0234 4.17578 4.52344 4.17578 2.64707 4.68033C2.13737 4.81928 1.6731 5.08967 1.30073 5.46444C0.928354 5.8392 0.660943 6.3052 0.525256 6.81578C0.0234376 8.70033 0.0234375 12.6303 0.0234375 12.6303C0.0234375 12.6303 0.0234376 16.5603 0.525256 18.4449C0.660943 18.9555 0.928354 19.4214 1.30073 19.7962C1.6731 20.171 2.13737 20.4414 2.64707 20.5803C4.52344 21.0849 12.0234 21.0849 12.0234 21.0849C12.0234 21.0849 19.5234 21.0849 21.3998 20.5803C21.9095 20.4414 22.3738 20.171 22.7462 19.7962C23.1185 19.4214 23.3859 18.9555 23.5216 18.4449C24.0234 16.5603 24.0234 12.6303 24.0234 12.6303C24.0234 12.6303 24.0234 8.70033 23.5216 6.81578Z" fill="white" />
+								<path class="path2" d="M9.56934 16.1998V9.0625L15.8421 12.6311L9.56934 16.1998Z" fill="#230CF2" />
+							</g>
+							<defs>
+								<clipPath id="clip0_435_2984">
+									<rect width="24" height="24" fill="white" transform="translate(0 0.630859)" />
+								</clipPath>
+							</defs>
+						</svg>
+					</a>
+					
+				</div>
+				<div class="footer__social">
+				<a href="https://zeropad.fun/media-kit/" style="text-decoration: underline;">Media kit</a>
+			</div>
+				<div class="footer__copy">© 2025 Multi-chain staking platform.</div>
+			</div>
+		</footer>
+	</div>
+	<div id="connect" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button type="button" data-close class="popup__close">
+					<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+				<div class="popup__title title">Subscribe to us</div>
+				<div class="popup__text">In order to connect your wallet, you need to subscribe to us on Twitter.</div>
+				<div class="popup__item" >
+					<div class="popup__icon">
+						<svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9.01199 1.95215L5.85341 1.95215C4.67376 1.95215 3.53204 2.4155 2.69479 3.26515C1.85754 4.11479 1.38187 5.25399 1.40095 6.47053C1.38182 7.68706 1.85768 8.82641 2.69479 9.67592C3.551 10.5448 4.65461 11.0083 5.83431 11.0083H8.99289M12.9888 11.0469H16.1474C17.327 11.0469 18.4687 10.5835 19.306 9.73388C20.1432 8.88424 20.6189 7.74504 20.5998 6.5285C20.5998 5.33139 20.1241 4.19214 19.2869 3.34249C18.4497 2.49285 17.3271 2.01013 16.1474 2.01011H12.9888M6.25283 6.45728L15.7286 6.45728" stroke="#248DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+					</div>
+					<input id="twitterInput"  type="text" class="popup__input" placeholder="Your Twitter profile link">
+					
+				</div>
+				<p  id="error_message" style="color: red; font-size: 16px;font-weight: 500; margin-bottom: 15px;margin-top: 15px;display: none;">Error message</p>
+				<div class="popup__links">
+					
+					<a style="cursor: pointer;" class="popup__link popup__link_green" id="subscribeBtn" >Subscribe to Twitter</a>
+					<a style="cursor: pointer;" class="popup__link" style="display: none;" id="subscribedBtn" >I'm subscribed</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="sign_message" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				
+	
+				<div class="popup__wait wait-popup">
+					<div class="wait-popup__title">Sign Message</div>
+					<div class="wait-popup__sub-title">Please sign the message in your wallet to authenticate.</div>
+					<div class="wait-popup__image">
+						<img src="img/loading.gif" alt="loading">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+
+	
+	<script src="js/app.min.js?_v=20250709161633"></script>
+	<script src="js/new_update.js"></script>
+
+	<button style="display: none;" data-popup="#connect" id="openTwitterbtn">Conn</button>
+
+
+  
+  
+  <script>
+	  
+  const referralCode = new URLSearchParams(window.location.search).get('r');
+  if (referralCode) {
+	  const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString();
+	  document.cookie = `refferal=${referralCode}; expires=${expires}; path=/`;
+	  console.log('Referral saved:', referralCode);
+  }
+  
+  
+  
+  
+  </script>
+  
+  
+	
+  
+  
+
+  
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('preloader');
+  if (!container) return;
+
+  const html = document.documentElement;
+  const bar  = container.querySelector('.preloader__line span');
+
+
+  const images = document.querySelector('[data-preloader]')
+    ? document.querySelectorAll('[data-preloader] img')
+    : document.querySelectorAll('img');
+  const totalImages = images.length;
+  let   loadedImages = 0;
+
+ 
+  const isMobile   = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const hlsUrl     = isMobile
+    ? '/videos/video-phone/phone.m3u8'
+    : 'segments/playlist.m3u8';
+
+  const heroContainer = document.querySelector('.hero__container');
+  heroContainer.innerHTML = '';
+  const video = document.createElement('video');
+  Object.assign(video, {
+    className: `hero__video ${isMobile ? 'hero__video_phone' : 'hero__video_pc'}`,
+    autoplay: true, muted: true, loop: true, playsInline: true
+  });
+  video.setAttribute('oncontextmenu', 'return false;');
+  heroContainer.appendChild(video);
+
+ 
+  const SEGMENTS_TO_PREFETCH = 10;
+  let totalSegments = SEGMENTS_TO_PREFETCH;
+  let loadedSegments = 0;
+
+  let visualProgress = 0;
+  html.classList.add('loading', 'lock');
+
+  function updateProgress() {
+    const imgPart = totalImages > 0
+      ? (loadedImages / totalImages) * 50
+      : 50;
+    const segPart = totalSegments > 0
+      ? (loadedSegments / totalSegments) * 50
+      : 50;
+    const pct = Math.round(imgPart + segPart);
+
+    if (bar) bar.style.width = pct + '%';
+
+    if (visualProgress < pct) {
+      visualProgress++;
+      requestAnimationFrame(updateProgress);
+    } else if (visualProgress >= 100) {
+      html.classList.add('loaded');
+      html.classList.remove('loading', 'lock');
+      setTimeout(() => container.remove(), 100);
+    }
+  }
+
+  function onImageLoaded() {
+    loadedImages++;
+    updateProgress();
+  }
+
+  function onSegmentLoaded() {
+    loadedSegments++;
+    updateProgress();
+  }
+
+
+  images.forEach(img => {
+    const src = img.dataset.src || img.src;
+    const clone = new Image();
+    clone.onload  = onImageLoaded;
+    clone.onerror = onImageLoaded;
+    clone.src     = src;
+  });
+
+ 
+  if (Hls.isSupported()) {
+    const hls = new Hls({
+      autoStartLoad:     false,
+      startLevel:        0,
+      startFragPrefetch: SEGMENTS_TO_PREFETCH,
+      maxBufferLength:   30,
+      maxMaxBufferLength:600
+    });
+
+    hls.loadSource(hlsUrl);
+    hls.attachMedia(video);
+
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      hls.startLoad();
+    });
+
+    hls.on(Hls.Events.LEVEL_LOADED, (_e, data) => {
+      const fragments = data.details.fragments.slice(0, SEGMENTS_TO_PREFETCH);
+      const base      = data.details.baseUrl || '';
+
+     
+      fragments.forEach(f => {
+        fetch(base + f.url)
+          .then(r => r.arrayBuffer())
+          .catch(() => {/* игнорируем */})
+          .finally(() => onSegmentLoaded());
+      });
+    });
+
+
+  
+    hls.on(Hls.Events.ERROR, (_evt, data) => {
+      if (data.fatal) {
+      
+        while (loadedSegments < totalSegments) {
+          onSegmentLoaded();
+        }
+      }
+    });
+  }
+ 
+  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = hlsUrl;
+    video.addEventListener('canplaythrough', onSegmentLoaded, { once: true });
+    video.addEventListener('error',         onSegmentLoaded, { once: true });
+  }
+
+  else {
+ 
+    while (loadedImages < totalImages) onImageLoaded();
+    while (loadedSegments < totalSegments) onSegmentLoaded();
+  }
+});
+
+</script>
+
+
+
+
+	
+</body>
+
+</html>

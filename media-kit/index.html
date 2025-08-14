@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Media Kit</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="../img/favicon.png">
+
+	<style>
+		.loading body {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.loaded body {
+			transition: opacity 0.1s ease 0s;
+			opacity: 1;
+			visibility: visible;
+		}
+
+		* {
+			padding: 0px;
+			margin: 0px;
+			border: 0px;
+		}
+
+		*,
+		*:before,
+		*:after {
+			box-sizing: border-box;
+		}
+
+		.preloader {
+			pointer-events: none;
+			z-index: -1;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: grid;
+			grid-template-rows: 5rem 1fr 5rem;
+			grid-template-columns: 1fr;
+			justify-content: center;
+			align-items: center;
+			background: #09033d;
+		}
+
+		.preloader__image {
+			text-align: center;
+			grid-row: 2 / 3;
+		}
+
+		.preloader__image img {
+			max-width: 100%;
+		}
+
+		.preloader__body {
+			grid-row: 3 / 4;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		}
+
+		.preloader__text {
+			font-size: 1rem;
+			color: #fff;
+			opacity: 0.5;
+			margin-bottom: 0.3125rem;
+		}
+
+		.preloader__line {
+			width: 15.5625rem;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 1.0625rem;
+			height: 0.625rem;
+			position: relative;
+		}
+
+		.preloader__line span {
+			display: inline-block;
+			transition: width 0.2s ease;
+			height: 0.625rem;
+			background-color: #c5f604;
+			border-radius: 1.0625rem;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+		}
+	</style>
+	<link rel="stylesheet" href="css22/style.min.css?_v=20250809111223">
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	<script src="../walletconnect-module/wallet-connect-service.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QQC5J5R6ZR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QQC5J5R6ZR');
+</script>
+</head>
+
+<body>
+
+	<div class="wrapper">
+		<header class="header" id="header">
+			<div class="header__container">
+				<a  href="/" class="header__logo">
+					<img src="img22/logo.svg" alt="logo Zeropad">
+				</a>
+				<a  href="#" class="header__link connect-wallet-btn">
+					<svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M19.6399 11.7607V14.2008C19.6399 15.3054 18.7445 16.2008 17.6399 16.2008H3.39982C2.29527 16.2008 1.39985 15.3054 1.39982 14.2008L1.39948 3.80085C1.39944 2.69625 2.29488 1.80078 3.39948 1.80078H17.6399C18.7445 1.80078 19.6399 2.69621 19.6399 3.80078V6.1717M20.5999 11.7607H17.4799C16.0219 11.7607 14.8399 10.5787 14.8399 9.12066C14.8399 7.66263 16.0219 6.48067 17.4799 6.48067H20.5999V11.7607Z" stroke="white" stroke-width="2" stroke-linejoin="round"></path>
+					</svg>
+					<span>Connect wallet</span>
+				</a>
+				
+			</div>
+		</header>
+
+
+		<style>
+        
+
+			.header__account {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+		   
+				cursor: pointer;
+				user-select: none;
+				transition: all 0.3s ease;
+			}
+	
+			.header__account svg {
+				margin-right: 8px;
+			}
+	
+			
+	
+			.account-dropdown {
+				position: absolute;
+				top: 100%;
+				right: 0;
+			   margin-top: 20px;
+				background: #2e3645;
+				
+				border-radius: .75rem;
+				
+				-webkit-backdrop-filter: blur(12px) saturate(140%);
+				backdrop-filter: blur(12px) saturate(140%);
+				min-width: 100%;
+				text-align: center;
+				opacity: 0;
+				visibility: hidden;
+				transform: translateY(-10px);
+				transition: all 0.3s ease;
+				z-index: 1000;
+				overflow: hidden;
+				box-shadow:
+					inset 0 1px 0 rgba(255, 255, 255, 0.08),
+					0 1px 2px rgba(0, 0, 0, 0.24),
+					0 0 0 3px rgba(255, 255, 255, 0.06),
+					0 0 0 7px rgba(255, 255, 255, 0.04);
+			}
+	
+			.account-dropdown.active {
+				opacity: 1;
+				visibility: visible;
+				transform: translateY(0);
+			}
+	
+			.dropdown-item {
+				display: flex;
+				min-height: 2.25rem;
+				align-items: center;
+				padding: .3125rem .375rem;
+				color: red;
+				justify-content: center;
+				font-size: 1rem;
+				font-family: Arial, sans-serif;
+				cursor: pointer;
+				transition: background 0.2s ease;
+				
+				border-radius: .75rem;
+			  
+			}
+	
+			.dropdown-item:last-child {
+				border-bottom: none;
+			}
+	
+		 
+	
+			.dropdown-item.disconnect {
+				color: red;
+			}
+	
+			.dropdown-item.disconnect:hover {
+				background: rgba(255, 255, 255, 0.08);
+				color: #ff5b5b;
+			}
+	
+			
+	
+		   
+	
+		</style>
+
+
+
+
+		<main id="main">
+			<section class="media">
+				<div class="media__container">
+					<div class="media__top">
+						<h1 class="media__title">Media Kit</h1>
+						<div class="media__sub-title">Download All Assets</div>
+						<div class="media__text">Get all types of logos and token symbol (.svg and .png)</div>
+						<a target="_blank" href="https://zeropad.fun/media-kit/media_files/Download.zip" class="media__download">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g opacity="0.5">
+									<path d="M3.3335 16.9856C3.67075 17.315 4.12817 17.5 4.60512 17.5H15.3952C15.8722 17.5 16.3296 17.315 16.6668 16.9856M10.0012 2.5V12.4521M10.0012 12.4521L14.1117 8.64941M10.0012 12.4521L5.89066 8.64941" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+								</g>
+							</svg>
+							<span>Download.zip</span>
+						</a>
+					</div>
+					<div class="media__bottom">
+						<div class="media__block">
+							<h2 class="media__caption">Logo</h2>
+							<div class="media__body">
+								<div class="media__item">
+									<div class="media__video">
+										<video loop autoplay muted playsinline>
+											<source src="files22/V1.mp4" type="video/mp4">
+										</video>
+									</div>
+									<div class="media__links">
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/1Logo/Blue_back/Blue_back.png" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.png</span>
+										</a>
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/1Logo/Blue_back/Blue_back.svg" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.svg</span>
+										</a>
+									</div>
+								</div>
+								<div class="media__item">
+									<div class="media__video">
+										<video loop autoplay muted playsinline>
+											<source src="files22/V2.mp4" type="video/mp4">
+										</video>
+									</div>
+									<div class="media__links">
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/1Logo/White_back/White_back.png" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.png</span>
+										</a>
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/1Logo/White_back/White_back.svg" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.svg</span>
+										</a>
+									</div>
+								</div>
+								<div class="media__item">
+									<div class="media__video">
+										<video loop autoplay muted playsinline>
+											<source src="files22/V3.mp4" type="video/mp4">
+										</video>
+									</div>
+									<div class="media__links">
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/1Logo/Green_back/Green_back.png" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.png</span>
+										</a>
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/1Logo/Green_back/Green_back.svg" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.svg</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="media__block">
+							<h2 class="media__caption">Intro</h2>
+							<div class="media__body">
+								<div class="media__item">
+									<div class="media__video">
+										<video loop autoplay muted playsinline>
+											<source src="files22/V1.mp4" type="video/mp4">
+										</video>
+									</div>
+									<div class="media__links" >
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/2Intro/V1.mp4" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.mp4</span>
+										</a>
+										
+									</div>
+								</div>
+								<div class="media__item">
+									<div class="media__video">
+										<video loop autoplay muted playsinline>
+											<source src="files22/V2.mp4" type="video/mp4">
+										</video>
+									</div>
+									<div class="media__links" >
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/2Intro/V2.mp4" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.mp4</span>
+										</a>
+										
+									</div>
+								</div>
+								<div class="media__item">
+									<div class="media__video">
+										<video loop autoplay muted playsinline>
+											<source src="files22/V3.mp4" type="video/mp4">
+										</video>
+									</div>
+									<div class="media__links" >
+										<a target="_blank" href="https://zeropad.fun/media-kit/media_files/2Intro/V3.mp4" class="media__link">
+											<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g opacity="0.5">
+													<path d="M3.74414 17.634C4.0814 17.9634 4.53881 18.1484 5.01576 18.1484H15.8058C16.2828 18.1484 16.7402 17.9634 17.0775 17.634M10.4118 3.14844V13.1005M10.4118 13.1005L14.5223 9.29785M10.4118 13.1005L6.3013 9.29785" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+												</g>
+											</svg>
+											<span>.mp4</span>
+										</a>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="typography">
+				<div class="typography__container">
+					<h2 class="typography__title">Typography</h2>
+					<div class="typography__body">
+						<div class="typography__item typography_font">
+							<div class="typography__caption">Square721TL</div>
+							<div class="typography__text">Here is an example of funny or not text, there won't be
+								another one)</div>
+							<div class="typography__links">
+								<a target="_blank" href="https://zeropad.fun/media-kit/media_files/3Typography/Square721TL.zip" class="typography__link">
+									<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<g opacity="0.5">
+											<path d="M4 17.2825C4.33726 17.6118 4.79467 17.7969 5.27162 17.7969H16.0617C16.5387 17.7969 16.9961 17.6118 17.3333 17.2825M10.6677 2.79687V12.7489M10.6677 12.7489L14.7782 8.94629M10.6677 12.7489L6.55716 8.94629" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+										</g>
+									</svg>
+									<span>.zip</span>
+								</a>
+								
+							</div>
+						</div>
+						<div class="typography__item">
+							<div class="typography__caption">Onest</div>
+							<div class="typography__text">Here is an example of funny or not text, there won't be
+								another one)</div>
+							<div class="typography__links">
+								<a target="_blank" href="https://zeropad.fun/media-kit/media_files/3Typography/Onest.zip" class="typography__link">
+									<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<g opacity="0.5">
+											<path d="M4 17.2825C4.33726 17.6118 4.79467 17.7969 5.27162 17.7969H16.0617C16.5387 17.7969 16.9961 17.6118 17.3333 17.2825M10.6677 2.79687V12.7489M10.6677 12.7489L14.7782 8.94629M10.6677 12.7489L6.55716 8.94629" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+										</g>
+									</svg>
+									<span>.zip</span>
+								</a>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="posts">
+				<div class="posts__container">
+					<h2 class="posts__title">Posts</h2>
+					<div class="posts__body">
+						<div class="posts__image">
+							<img src="img22/posts-image1.webp" alt="image">
+						</div>
+						<div class="posts__image">
+							<img src="img22/posts-image2.webp" alt="image">
+						</div>
+						<div class="posts__image">
+							<img src="img22/posts-image3.webp" alt="image">
+						</div>
+						<div class="posts__image">
+							<img src="img22/posts-image4.webp" alt="image">
+						</div>
+						<div class="posts__image">
+							<img src="img22/posts-image5.webp" alt="image">
+						</div>
+						<div class="posts__image">
+							<img src="img22/posts-image6.webp" alt="image">
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="baners">
+				<div class="baners__container">
+					<h2 class="baners__title">Baners</h2>
+					<div class="baners__body">
+						<div class="baners__column">
+							<div class="baners__block">
+								<div class="baners__image">
+									<img src="img22/baners1.webp" alt="image">
+								</div>
+								<div class="baners__row">
+									<div class="baners__name">Avatar</div>
+									<a target="_blank" href="https://zeropad.fun/media-kit/media_files/5Baners/V1/V1%20-%201.png" class="baners__link">
+										<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<g opacity="0.5">
+												<path d="M3.3335 17.6145C3.67075 17.9439 4.12817 18.1289 4.60512 18.1289H15.3952C15.8722 18.1289 16.3296 17.9439 16.6668 17.6145M10.0012 3.12891V13.081M10.0012 13.081L14.1117 9.27832M10.0012 13.081L5.89066 9.27832" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+											</g>
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div class="baners__box">
+								<div class="baners__image baners__image_big">
+									<img src="img22/baners2.webp" alt="image">
+								</div>
+								<div class="baners__row">
+									<div class="baners__name">YouTube Baner</div>
+									<a target="_blank" href="https://zeropad.fun/media-kit/media_files/5Baners/V1/V1%20-%202.png" class="baners__link">
+										<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<g opacity="0.5">
+												<path d="M3.3335 17.6145C3.67075 17.9439 4.12817 18.1289 4.60512 18.1289H15.3952C15.8722 18.1289 16.3296 17.9439 16.6668 17.6145M10.0012 3.12891V13.081M10.0012 13.081L14.1117 9.27832M10.0012 13.081L5.89066 9.27832" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+											</g>
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div class="baners__box">
+								<div class="baners__image baners__image_small">
+									<img src="img22/baners3.webp" alt="image">
+								</div>
+								<div class="baners__row">
+									<div class="baners__name">Twitter Baner</div>
+									<a target="_blank" href="https://zeropad.fun/media-kit/media_files/5Baners/V1/V1%20-%203.png" class="baners__link">
+										<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<g opacity="0.5">
+												<path d="M3.3335 17.6145C3.67075 17.9439 4.12817 18.1289 4.60512 18.1289H15.3952C15.8722 18.1289 16.3296 17.9439 16.6668 17.6145M10.0012 3.12891V13.081M10.0012 13.081L14.1117 9.27832M10.0012 13.081L5.89066 9.27832" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+											</g>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="baners__column">
+							<div class="baners__block">
+								<div class="baners__image">
+									<img src="img22/baners4.webp" alt="image">
+								</div>
+								<div class="baners__row">
+									<div class="baners__name">Avatar</div>
+									<a target="_blank" href="https://zeropad.fun/media-kit/media_files/5Baners/V2/V2%20-%201.png" class="baners__link">
+										<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<g opacity="0.5">
+												<path d="M3.3335 17.6145C3.67075 17.9439 4.12817 18.1289 4.60512 18.1289H15.3952C15.8722 18.1289 16.3296 17.9439 16.6668 17.6145M10.0012 3.12891V13.081M10.0012 13.081L14.1117 9.27832M10.0012 13.081L5.89066 9.27832" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+											</g>
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div class="baners__box">
+								<div class="baners__image baners__image_big">
+									<img src="img22/baners5.webp" alt="image">
+								</div>
+								<div class="baners__row">
+									<div class="baners__name">YouTube Baner</div>
+									<a target="_blank" href="https://zeropad.fun/media-kit/media_files/5Baners/V2/V2%20-%202.png" class="baners__link">
+										<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<g opacity="0.5">
+												<path d="M3.3335 17.6145C3.67075 17.9439 4.12817 18.1289 4.60512 18.1289H15.3952C15.8722 18.1289 16.3296 17.9439 16.6668 17.6145M10.0012 3.12891V13.081M10.0012 13.081L14.1117 9.27832M10.0012 13.081L5.89066 9.27832" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+											</g>
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div class="baners__box">
+								<div class="baners__image baners__image_small">
+									<img src="img22/baners6.webp" alt="image">
+								</div>
+								<div class="baners__row">
+									<div class="baners__name">Twitter Baner</div>
+									<a target="_blank" href="https://zeropad.fun/media-kit/media_files/5Baners/V2/V2%20-%203.png" class="baners__link">
+										<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<g opacity="0.5">
+												<path d="M3.3335 17.6145C3.67075 17.9439 4.12817 18.1289 4.60512 18.1289H15.3952C15.8722 18.1289 16.3296 17.9439 16.6668 17.6145M10.0012 3.12891V13.081M10.0012 13.081L14.1117 9.27832M10.0012 13.081L5.89066 9.27832" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+											</g>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="bonding">
+				<div class="bonding__container">
+					<h2 class="bonding__title">Bonding curve</h2>
+					<div class="bonding__body">
+						<div class="bonding__item">
+							<div class="bonding__box">
+								<div class="bonding__text">Bonding curve progress: 79%</div>
+								<div class="bonding__progress"></div>
+							</div>
+							<div class="bonding__links">
+								<a target="_blank" href="https://zeropad.fun/media-kit/media_files/6Bonding%20curve/V1.png" class="bonding__link">
+									<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<g opacity="0.5">
+											<path d="M4.0835 17.1262C4.42075 17.4556 4.87817 17.6406 5.35512 17.6406H16.1452C16.6222 17.6406 17.0796 17.4556 17.4168 17.1262M10.7512 2.64062V12.5927M10.7512 12.5927L14.8617 8.79004M10.7512 12.5927L6.64066 8.79004" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+										</g>
+									</svg>
+									<span>.png</span>
+								</a>
+								
+							</div>
+						</div>
+						<div class="bonding__item">
+							<div class="bonding__box">
+								<div class="bonding__text" style="text-align: center;">Bonding curve progress: 79%</div>
+								<div class="bonding__progress"></div>
+							</div>
+							<div class="bonding__links">
+								<a target="_blank" href="https://zeropad.fun/media-kit/media_files/6Bonding%20curve/V2.png" class="bonding__link">
+									<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<g opacity="0.5">
+											<path d="M4.0835 17.1262C4.42075 17.4556 4.87817 17.6406 5.35512 17.6406H16.1452C16.6222 17.6406 17.0796 17.4556 17.4168 17.1262M10.7512 2.64062V12.5927M10.7512 12.5927L14.8617 8.79004M10.7512 12.5927L6.64066 8.79004" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+										</g>
+									</svg>
+									<span>.png</span>
+								</a>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="memes">
+				<div class="memes__container">
+					<h2 class="memes__title">Memes</h2>
+					<div class="memes__block">
+						<div class="memes__body">
+							<div class="memes__image">
+								<img src="img22/memes1.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes2.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes3.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes4.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes5.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes6.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes7.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes8.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes9.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes10.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes11.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes12.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes13.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes14.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes15.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes16.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes17.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes18.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes19.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes20.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes21.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes22.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes23.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes24.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes25.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes26.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes27.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes28.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes29.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes30.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes31.webp" alt="image">
+							</div>
+							<div class="memes__image">
+								<img src="img22/memes32.webp" alt="image">
+							</div>
+						</div>
+						<a target="_blank" href="https://zeropad.fun/media-kit/media_files/Download.zip" class="memes__link">
+							<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g opacity="0.5">
+									<path d="M3.8335 17.0559C4.17075 17.3853 4.62817 17.5703 5.10512 17.5703H15.8952C16.3722 17.5703 16.8296 17.3853 17.1668 17.0559M10.5012 2.57031V12.5224M10.5012 12.5224L14.6117 8.71973M10.5012 12.5224L6.39066 8.71973" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+								</g>
+							</svg>
+							<span>Download.zip</span>
+						</a>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="footer" id="footer">
+			<div class="footer__container">
+				<div class="footer__logo">
+					<img src="img22/logo.svg" alt="logo Zeropad">
+				</div>
+				<div class="footer__social">
+					<a target="_blank" href="https://x.com/ZeroPad_fun" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M18.3263 2.53516H21.6998L14.3297 10.9586L23 22.4211H16.2112L10.894 15.4692L4.80995 22.4211H1.43443L9.31743 13.4113L1 2.53516H7.96111L12.7674 8.88949L18.3263 2.53516ZM17.1423 20.4019H19.0116L6.94539 4.44829H4.93946L17.1423 20.4019Z" fill="white" />
+						</svg>
+					</a>
+					<a target="_blank" href="https://discord.gg/MhNGYyPD" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M20.317 4.78594C18.7873 4.08406 17.147 3.56695 15.4319 3.27077C15.4007 3.26506 15.3695 3.27934 15.3534 3.30791C15.1424 3.68313 14.9087 4.17263 14.7451 4.55737C12.9004 4.2812 11.0652 4.2812 9.25832 4.55737C9.09465 4.16407 8.85248 3.68313 8.64057 3.30791C8.62448 3.2803 8.59328 3.26601 8.56205 3.27077C6.84791 3.566 5.20756 4.08312 3.67693 4.78594C3.66368 4.79166 3.65233 4.80119 3.64479 4.81356C0.533392 9.46192 -0.31895 13.996 0.0991801 18.4739C0.101072 18.4958 0.11337 18.5168 0.130398 18.5301C2.18321 20.0376 4.17171 20.9529 6.12328 21.5595C6.15451 21.569 6.18761 21.5576 6.20748 21.5319C6.66913 20.9014 7.08064 20.2367 7.43348 19.5377C7.4543 19.4967 7.43442 19.4482 7.39186 19.432C6.73913 19.1844 6.1176 18.8825 5.51973 18.5396C5.47244 18.512 5.46865 18.4444 5.51216 18.412C5.63797 18.3177 5.76382 18.2196 5.88396 18.1206C5.90569 18.1025 5.93598 18.0987 5.96153 18.1101C9.88928 19.9034 14.1415 19.9034 18.023 18.1101C18.0485 18.0977 18.0788 18.1016 18.1015 18.1196C18.2216 18.2187 18.3475 18.3177 18.4742 18.412C18.5177 18.4444 18.5149 18.512 18.4676 18.5396C17.8697 18.8891 17.2482 19.1844 16.5945 19.431C16.552 19.4472 16.533 19.4967 16.5538 19.5377C16.9143 20.2357 17.3258 20.9005 17.7789 21.5309C17.7978 21.5576 17.8319 21.569 17.8631 21.5595C19.8241 20.9529 21.8126 20.0376 23.8654 18.5301C23.8834 18.5168 23.8948 18.4968 23.8967 18.4749C24.3971 13.2979 23.0585 8.80101 20.3482 4.81451C20.3416 4.80119 20.3303 4.79166 20.317 4.78594ZM8.02002 15.7474C6.8375 15.7474 5.86313 14.6617 5.86313 13.3284C5.86313 11.9951 6.8186 10.9095 8.02002 10.9095C9.23087 10.9095 10.1958 12.0047 10.1769 13.3284C10.1769 14.6617 9.22141 15.7474 8.02002 15.7474ZM15.9947 15.7474C14.8123 15.7474 13.8379 14.6617 13.8379 13.3284C13.8379 11.9951 14.7933 10.9095 15.9947 10.9095C17.2056 10.9095 18.1705 12.0047 18.1516 13.3284C18.1516 14.6617 17.2056 15.7474 15.9947 15.7474Z" fill="white" />
+						</svg>
+					</a>
+					<a target="_blank" href="https://www.youtube.com/@zeropad_fun" class="footer__item">
+						<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g clip-path="url(#clip0_435_2984)">
+								<path d="M23.5216 6.81578C23.3859 6.3052 23.1185 5.8392 22.7462 5.46444C22.3738 5.08967 21.9095 4.81928 21.3998 4.68033C19.5234 4.17578 12.0234 4.17578 12.0234 4.17578C12.0234 4.17578 4.52344 4.17578 2.64707 4.68033C2.13737 4.81928 1.6731 5.08967 1.30073 5.46444C0.928354 5.8392 0.660943 6.3052 0.525256 6.81578C0.0234376 8.70033 0.0234375 12.6303 0.0234375 12.6303C0.0234375 12.6303 0.0234376 16.5603 0.525256 18.4449C0.660943 18.9555 0.928354 19.4214 1.30073 19.7962C1.6731 20.171 2.13737 20.4414 2.64707 20.5803C4.52344 21.0849 12.0234 21.0849 12.0234 21.0849C12.0234 21.0849 19.5234 21.0849 21.3998 20.5803C21.9095 20.4414 22.3738 20.171 22.7462 19.7962C23.1185 19.4214 23.3859 18.9555 23.5216 18.4449C24.0234 16.5603 24.0234 12.6303 24.0234 12.6303C24.0234 12.6303 24.0234 8.70033 23.5216 6.81578Z" fill="white" />
+								<path class="path2" d="M9.56934 16.1998V9.0625L15.8421 12.6311L9.56934 16.1998Z" fill="#230CF2" />
+							</g>
+							<defs>
+								<clipPath id="clip0_435_2984">
+									<rect width="24" height="24" fill="white" transform="translate(0 0.630859)" />
+								</clipPath>
+							</defs>
+						</svg>
+					</a>
+				</div>
+				<div class="footer__copy">© 2025 Multi-chain staking platform.</div>
+			</div>
+		</footer>
+	</div>
+
+
+	<div id="connect" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button type="button" data-close class="popup__close">
+					<svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M9 1.5L1 9.5M9 9.5L1 1.5" stroke="white" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+				<div class="popup__title title">Subscribe to us</div>
+				<div class="popup__text">In order to connect your wallet, you need to subscribe to us on Twitter.</div>
+				<div class="popup__item" >
+					<div class="popup__icon">
+						<svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9.01199 1.95215L5.85341 1.95215C4.67376 1.95215 3.53204 2.4155 2.69479 3.26515C1.85754 4.11479 1.38187 5.25399 1.40095 6.47053C1.38182 7.68706 1.85768 8.82641 2.69479 9.67592C3.551 10.5448 4.65461 11.0083 5.83431 11.0083H8.99289M12.9888 11.0469H16.1474C17.327 11.0469 18.4687 10.5835 19.306 9.73388C20.1432 8.88424 20.6189 7.74504 20.5998 6.5285C20.5998 5.33139 20.1241 4.19214 19.2869 3.34249C18.4497 2.49285 17.3271 2.01013 16.1474 2.01011H12.9888M6.25283 6.45728L15.7286 6.45728" stroke="#248DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+					</div>
+					<input id="twitterInput"  type="text" class="popup__input" placeholder="Your Twitter profile link">
+					
+				</div>
+				<p  id="error_message" style="color: red; font-size: 16px;font-weight: 500; margin-bottom: 15px;margin-top: 15px;display: none;">Error message</p>
+				<div class="popup__links">
+					
+					<a style="cursor: pointer;" class="popup__link popup__link_green" id="subscribeBtn" >Subscribe to Twitter</a>
+					<a style="cursor: pointer;" class="popup__link" style="display: none;" id="subscribedBtn" >I'm subscribed</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="sign_message" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				
+	
+				<div class="popup__wait wait-popup">
+					<div class="wait-popup__title">Sign Message</div>
+					<div class="wait-popup__sub-title">Please sign the message in your wallet to authenticate.</div>
+					<div class="wait-popup__image">
+						<img src="img/loading.gif" alt="loading">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<style>
+		.relative {
+			position: relative;
+		}
+		.flex {
+			display: flex;
+		}
+		.aspect-square {
+			aspect-ratio: 1;
+		}
+		.w-18 {
+			width: calc(.25rem * 16);
+		}
+		.w-9 {
+			width: calc(.25rem * 8);
+		}
+		.w-8 {
+			width: calc(.25rem * 8);
+		}
+		.items-center {
+			align-items: center;
+		}
+		.justify-center {
+			justify-content: center;
+		}
+		.rounded-full {
+			border-radius: 3.40282e+38px;
+		}
+		.border {
+			border-style: solid;
+			border-width: 1px;
+		}
+		.border-epic\/50 {
+			border-color: color-mix(in srgb, rgb(211 88 255) 50%, transparent);
+		}
+		@supports (color:color-mix(in lab,red,red)) {
+			.border-epic\/50 {
+				border-color: color-mix(in oklab, rgb(211 88 255) 50%, transparent);
+			}
+		}
+		.p-1 {
+			padding: calc(.25rem * 1);
+		}
+		.p-0\.5 {
+			padding: calc(.25rem * 0.5);
+		}
+		.p-0\.25 {
+			padding: calc(.25rem * 0.25);
+		}
+		.w-full {
+			width: 100%;
+		}
+		.gap-1 {
+			gap: calc(.25rem * 1);
+		}
+		.gap-0\.5 {
+			gap: calc(.25rem * 0.5);
+		}
+		.gap-0\.25 {
+			gap: calc(.25rem * 0.25);
+		}
+		.border-epic {
+			border-color: rgb(211 88 255);
+		}
+		.bg-epic-transparent-1 {
+			background-color: rgb(211 88 255 /8%);
+		}
+		.h-full {
+			height: 100%;
+		}
+		.w-\[75\%\] {
+			width: 75%;
+		}
+		.overflow-visible {
+			overflow: visible;
+		}
+		.fill-current {
+			fill: currentColor;
+		}
+		.absolute {
+			position: absolute;
+		}
+		.-bottom-1 {
+			bottom: calc(.25rem * -1);
+		}
+		.-bottom-0\.5 {
+			bottom: calc(.25rem * -0.5);
+		}
+		.-bottom-0\.25 {
+			bottom: calc(.25rem * -0.25);
+		}
+		.px-2 {
+			padding-inline: calc(.25rem * 2);
+		}
+		.rounded {
+			border-radius: .25rem;
+		}
+		.uppercase {
+			text-transform: uppercase;
+		}
+		.text-white {
+			color: rgb(255 255 255);
+		}
+		.whitespace-nowrap {
+			white-space: nowrap;
+		}
+		.text-xs {
+			font-size: 12px;
+		}
+		.font-mono {
+			font-family: var(--font-family-mono);
+		}
+		.px-1\.5 {
+			padding-inline: calc(.25rem * 1.5);
+		}
+		.bg-epic {
+			background-color: rgb(211 88 255);
+		}
+		.border-frosted-3 {
+			border-color: rgb(255 255 255 /12%);
+		}
+		.leading-normal {
+			--tw-leading: 1.5;
+			line-height: 1.5;
+		}
+		.text-center {
+			text-align: center;
+		}
+		.shadow-xs {
+			--tw-shadow: 0px 1px 2px 0px var(--tw-shadow-color, #00000008);
+		}
+	
+		.xpBlock {
+		display: flex;
+		align-items: center;
+		
+	}
+	
+		
+	
+		</style>
+
+
+<div id="preloader">
+
+	<script>
+		function preloader() {
+			const container = document.querySelector('#preloader');
+
+			const imageElements = document.querySelector('[data-preloader]') ?
+				document.querySelectorAll('[data-preloader] img') :
+				document.querySelectorAll('img');
+
+			const videoElements = document.querySelectorAll('video');
+
+			const totalAssets = imageElements.length + videoElements.length;
+			if (totalAssets === 0) {
+				container.remove();
+				return;
+			}
+
+			const html = document.documentElement;
+			html.classList.add('loading', 'lock');
+
+			const template = `
+			<div class="preloader">
+				<div class="preloader__image">
+					<img src="../files/loader.gif" alt="loader">
+				</div>
+				<div class="preloader__body">
+					<div class="preloader__text">...Loading...</div>
+					<div class="preloader__line"><span></span></div>
+				</div>
+			</div>`;
+			document.querySelector('html').insertAdjacentHTML('beforeend', template);
+
+			const bar = document.querySelector('.preloader__line span');
+
+			let loadedCount = 0;
+			let visualProgress = 0;
+
+			const updateProgress = () => {
+				const percent = Math.round((100 / totalAssets) * loadedCount);
+				if (bar) bar.style.width = `${percent}%`;
+
+				if (visualProgress < percent) {
+					visualProgress++;
+					requestAnimationFrame(updateProgress);
+				} else if (visualProgress >= 100) {
+					finishLoading();
+				}
+			};
+
+			const onAssetLoaded = () => {
+				loadedCount++;
+				updateProgress();
+			};
+
+			
+			imageElements.forEach(img => {
+				const clone = new Image();
+				clone.onload = onAssetLoaded;
+				clone.onerror = onAssetLoaded;
+				clone.src = img.dataset.src || img.src;
+			});
+
+	
+			videoElements.forEach(video => {
+				if (video.readyState >= 2) {
+					onAssetLoaded();
+				} else {
+					video.addEventListener('loadeddata', onAssetLoaded, {
+						once: true
+					});
+					video.addEventListener('error', onAssetLoaded, {
+						once: true
+					});
+				}
+			});
+
+			function finishLoading() {
+				html.classList.add('loaded');
+				html.classList.remove('loading', 'lock');
+
+				setTimeout(() => {
+					document.querySelector('.preloader')?.remove();
+					container.remove();
+				}, 100);
+			}
+		}
+
+		preloader();
+	</script>
+</div>
+
+<script src="../js/new_update.js"></script>
+	<script src="js22/app.min.js?_v=20250809111223"></script>
+</body>
+
+</html>
