@@ -90,6 +90,7 @@ function disconnectSite() {
 
 
     function openXconnectModal(){
+        removeMobilePanel();
         document.querySelector('#xconnect').style.display = 'block';
         document.querySelector('#xconnect').classList.add('popup_show');
         
@@ -213,7 +214,7 @@ function disconnectSite() {
             const data = await resp.json();
             if (data.success === false) {
               showErr(data.message || 'Verification failed');
-              if (data.error === 'Пользователь не подписан на Twitter') {
+              if (data.error === 'User is not subscribed to Twitter') {
                 return false;
               }
               return false;
@@ -225,7 +226,7 @@ function disconnectSite() {
           } catch (error) {
             console.error('Twitter verification failed:', error);
             showErr(error.message || 'Verification failed');
-            if (error.message && error.message.includes('Пользователь не подписан на Twitter')) {
+            if (error.message && error.message.includes('User is not subscribed to Twitter')) {
               return false;
             }
             throw error;
@@ -338,7 +339,12 @@ function openCrapModal(){
 	document.querySelector('html').classList.add('lock');
 }
 
-
+function removeMobilePanel() {
+    let panel = document.getElementById('account-fixed-panel');
+    if (panel) panel.remove();
+    document.removeEventListener('mousedown', handleMobilePanelOutsideClick, true);
+    document.removeEventListener('touchstart', handleMobilePanelOutsideClick, true);
+}
 
 
 
@@ -390,11 +396,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span style="font-size:18px; margin-right:8px;">&#10006;</span> Not Verified
                 </div>
                 <button style="width: 90%; background: linear-gradient(90deg, #3122ff, #550fff); color: #fff; font-weight: 500; font-size: 16px; border: none; border-radius: 12px; padding: 12px 0; margin-bottom: 8px; cursor: pointer;"
-                    onclick="openXconnectModal(); removeMobilePanel();">
+                    onclick="openXconnectModal(); ">
                     Verification &rarr;
                 </button>
                 <button style="width: 90%; background: #441013; color: #F15D6B; font-size: 16px; font-weight: 500; border: none; border-radius: 12px; padding: 12px 0; cursor: pointer;"
-                    onclick="disconnectSite(); removeMobilePanel();">
+                    onclick="disconnectSite();">
                     Disconnect
                 </button>
             `;
@@ -415,10 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.appendChild(panel);
     }
 
-    function removeMobilePanel() {
-        let panel = document.getElementById('account-fixed-panel');
-        if (panel) panel.remove();
-    }
+ 
 
 
     function initTippy() {

@@ -236,7 +236,18 @@ window.addEventListener('resize', () => {
     }
 });
 
-
+function removeMobilePanel() {
+    let panel = document.getElementById('account-fixed-panel');
+    if (panel) panel.remove();
+    document.removeEventListener('mousedown', handleMobilePanelOutsideClick, true);
+    document.removeEventListener('touchstart', handleMobilePanelOutsideClick, true);
+}
+function handleMobilePanelOutsideClick(e) {
+    const panel = document.getElementById('account-fixed-panel');
+    if (panel && !panel.contains(e.target)) {
+        removeMobilePanel();
+    }
+}
 
 
 function disconnectSite() {
@@ -274,13 +285,10 @@ function disconnectSite() {
         
         function createMobilePanel() {
             if (document.getElementById('account-fixed-panel')) return;
-    
             let panel = document.createElement('div');
             panel.id = 'account-fixed-panel';
-    
             let width = isMobile() ? '363px' : (isVerified ? '160px' : '363px');
             let height = isVerified ? '125px' : (isMobile() ? '162px' : '126px');
-    
             Object.assign(panel.style, {
                 position: 'fixed',
                 top: '110px',
@@ -301,7 +309,6 @@ function disconnectSite() {
                 zIndex: '10000',
                 boxSizing: 'border-box'
             });
-    
             if (!isVerified) {
                 panel.innerHTML = `
                     <div style="color:#F15D6B; font-weight:500; font-size:16px; display:flex; align-items:center; justify-content:center; margin-bottom:12px;">
@@ -318,25 +325,25 @@ function disconnectSite() {
                 `;
             } else {
                 panel.innerHTML = `
-      <div style="color:#B7FF2C; font-weight:600; font-size:16px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; padding-top:15px;">
-        <span style="font-size:18px; margin-right:7px;">&#10003;</span> Verified
-      </div>
-      <button 
-        style="width: 90%; background: #441013; color: #F15D6B; font-size: 15px; font-weight: 500; border: none; border-radius: 12px; padding: 12px 0; cursor: pointer; margin-bottom: 5px; box-sizing: border-box;"
-        onclick="disconnectSite(); removeMobilePanel();"
-      >
-        Disconnect
-      </button>
-    `;
+          <div style="color:#B7FF2C; font-weight:600; font-size:16px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; padding-top:15px;">
+            <span style="font-size:18px; margin-right:7px;">&#10003;</span> Verified
+          </div>
+          <button 
+            style="width: 90%; background: #441013; color: #F15D6B; font-size: 15px; font-weight: 500; border: none; border-radius: 12px; padding: 12px 0; cursor: pointer; margin-bottom: 5px; box-sizing: border-box;"
+            onclick="disconnectSite(); removeMobilePanel();"
+          >
+            Disconnect
+          </button>
+        `;
             }
-    
             document.body.appendChild(panel);
+            setTimeout(() => {
+                document.addEventListener('mousedown', handleMobilePanelOutsideClick, true);
+                document.addEventListener('touchstart', handleMobilePanelOutsideClick, true);
+            }, 0);
         }
     
-        function removeMobilePanel() {
-            let panel = document.getElementById('account-fixed-panel');
-            if (panel) panel.remove();
-        }
+       
     
         
         function initTippy() {
@@ -581,7 +588,7 @@ function disconnectSite() {
             const data = await resp.json();
             if (data.success === false) {
               showErr(data.message || 'Verification failed');
-              if (data.error === 'Пользователь не подписан на Twitter') {
+              if (data.error === 'User is not subscribed to Twitter') {
                 return false;
               }
               return false;
@@ -593,7 +600,7 @@ function disconnectSite() {
           } catch (error) {
             console.error('Twitter verification failed:', error);
             showErr(error.message || 'Verification failed');
-            if (error.message && error.message.includes('Пользователь не подписан на Twitter')) {
+            if (error.message && error.message.includes('User is not subscribed to Twitter')) {
               return false;
             }
             throw error;
@@ -622,6 +629,7 @@ function disconnectSite() {
 
 
       function openXconnectModal(){
+        removeMobilePanel();
         document.querySelector('#xconnect').style.display = 'block';
         document.querySelector('#xconnect').classList.add('popup_show');
         

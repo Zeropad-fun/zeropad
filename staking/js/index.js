@@ -1074,34 +1074,42 @@ const copyBtn2 = document.querySelector(".copy2");
         }
     });
     
-    
     async function loadPlatformStatistics() {
         try {
             const response = await fetch('/api/platform/statistic');
-            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
             const data = await response.json();
             const stats = data[0];
-            
             updateStatistics(stats);
         } catch (error) {
             console.error('Error loading platform statistics:', error);
         }
     }
     
+    function formatNumberShort(num) {
+        let value, suffix = '';
+        if (Math.abs(num) >= 1_000_000) {
+            value = num / 1_000_000;
+            suffix = 'M';
+        } else if (Math.abs(num) >= 1_000) {
+            value = num / 1_000;
+            suffix = 'K';
+        } else {
+            value = num;
+        }
+        let str = value.toFixed(2);
+        str = str.replace(/\.00$/, ''); 
+        return str + suffix;
+    }
+    
     function formatTVL(num) {
-        return `$${num.toFixed(1)}M`;
+        return '$' + formatNumberShort(num);
     }
     
     function formatNetworkTVL(num) {
-        if (num >= 1000) {
-            return `$${(num / 1000).toFixed(2)}M`;
-        } else {
-            return `$${Math.round(num)}K`;
-        }
+        return '$' + formatNumberShort(num);
     }
     
     function formatActiveStakers(num) {
@@ -1109,7 +1117,7 @@ const copyBtn2 = document.querySelector(".copy2");
     }
     
     function formatPoints(num) {
-        return `${num}K`;
+        return formatNumberShort(num);
     }
     
     function formatNewDeposits(num) {
@@ -1117,11 +1125,11 @@ const copyBtn2 = document.querySelector(".copy2");
     }
     
     function formatVolumeToday(num) {
-        return `$${Math.round(num)}K`;
+        return '$' + formatNumberShort(num);
     }
     
     function formatPointsEarned(num) {
-        return num.toString();
+        return formatNumberShort(num);
     }
     
     function formatPercentage(num) {
@@ -1130,35 +1138,26 @@ const copyBtn2 = document.querySelector(".copy2");
     
     function updateStatistics(stats) {
         document.querySelector('.widget-exchange__col:nth-child(1) .widget-exchange__value').textContent = formatTVL(stats.TotalValueLocked);
-        
         document.querySelector('.widget-exchange__col:nth-child(2) .widget-exchange__value').textContent = formatActiveStakers(stats.ActiveStakers);
-        
         document.querySelector('.widget-exchange__col:nth-child(3) .widget-exchange__value').textContent = formatPoints(stats.TodayTotalPoints);
-        
         document.querySelector('.widget-exchange__col:nth-child(1) .widget-exchange__label').textContent = formatPercentage(stats.TVLUpPercent);
-        
         document.querySelector('.widget-exchange__col:nth-child(2) .widget-exchange__label').textContent = formatPercentage(stats.UsersUpPercent);
-        
         document.querySelector('.widget-exchange__row:nth-child(1) .widget-exchange__item').textContent = formatNetworkTVL(stats.EthereumNetworkTVL);
-        
         document.querySelector('.widget-exchange__row:nth-child(2) .widget-exchange__item').textContent = formatNetworkTVL(stats.BaseNetworkTVL);
-        
         document.querySelector('.widget-exchange__row:nth-child(3) .widget-exchange__item').textContent = formatNetworkTVL(stats.ArbitrumNetworkTVL);
-        
         const activityRows = document.querySelectorAll('.widget-exchange__column:nth-child(2) .widget-exchange__row');
         activityRows[0].querySelector('.widget-exchange__item').textContent = formatNewDeposits(stats.NewDepositsToday);
         activityRows[1].querySelector('.widget-exchange__item').textContent = formatVolumeToday(stats.TotalVolumeOfDepositsToday);
         activityRows[2].querySelector('.widget-exchange__item').textContent = formatPointsEarned(stats.PointsFromDepositsToday);
-        
         const now = new Date();
         const timeAgo = Math.floor((now.getTime() - stats.UpdatedAt * 1000) / 60000);
         const lastUpdateText = timeAgo < 1 ? 'Just now' : `${timeAgo} min ago`;
-       
     }
     
     document.addEventListener('DOMContentLoaded', function() {
         loadPlatformStatistics();
     });
+    
 
     
 
@@ -1627,7 +1626,21 @@ const copyBtn2 = document.querySelector(".copy2");
             
             window.location.href = '/index.html';
         }
+        function removeMobilePanel() {
+            let panel = document.getElementById('account-fixed-panel');
+            if (panel) panel.remove();
+           
+            document.removeEventListener('mousedown', handleMobilePanelOutsideClick, true);
+            document.removeEventListener('touchstart', handleMobilePanelOutsideClick, true);
+        }
 
+        
+        function handleMobilePanelOutsideClick(e) {
+            const panel = document.getElementById('account-fixed-panel');
+            if (panel && !panel.contains(e.target)) {
+                removeMobilePanel();
+            }
+        }
 
         function setVerificationIcon(isVerified) {
 			console.log(isVerified)
@@ -1638,6 +1651,7 @@ const copyBtn2 = document.querySelector(".copy2");
 		}
 
         function openXconnectModal(){
+            removeMobilePanel();
             document.querySelector('#xconnect').style.display = 'block';
             document.querySelector('#xconnect').classList.add('popup_show');
             
@@ -1731,7 +1745,7 @@ const copyBtn2 = document.querySelector(".copy2");
                 const data = await resp.json();
                 if (data.success === false) {
                   showErr(data.message || 'Verification failed');
-                  if (data.error === 'Пользователь не подписан на Twitter') {
+                  if (data.error === 'User is not subscribed to Twitter') {
                     return false;
                   }
                   return false;
@@ -1743,7 +1757,7 @@ const copyBtn2 = document.querySelector(".copy2");
               } catch (error) {
                 console.error('Twitter verification failed:', error);
                 showErr(error.message || 'Verification failed');
-                if (error.message && error.message.includes('Пользователь не подписан на Twitter')) {
+                if (error.message && error.message.includes('User is not subscribed to Twitter')) {
                   return false;
                 }
                 throw error;
@@ -1881,12 +1895,14 @@ const copyBtn2 = document.querySelector(".copy2");
 				}
 		
 				document.body.appendChild(panel);
+			
+				setTimeout(() => {
+					document.addEventListener('mousedown', handleMobilePanelOutsideClick, true);
+					document.addEventListener('touchstart', handleMobilePanelOutsideClick, true);
+				}, 0);
 			}
 		
-			function removeMobilePanel() {
-				let panel = document.getElementById('account-fixed-panel');
-				if (panel) panel.remove();
-			}
+			
 		
 			
 			function initTippy() {
@@ -2024,7 +2040,7 @@ const copyBtn2 = document.querySelector(".copy2");
 					initUI();
 				})
 				.catch(err => {
-					console.error('Ошибка получения статуса:', err);
+					console.error('Error:', err);
 					isVerified = false;
 					initUI();
 				});
